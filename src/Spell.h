@@ -1,27 +1,27 @@
 #pragma once
-#include "Object.h"
+#include "String.h"
 
-class Spell : public Object {
+class Spell{
 
 public:
 
-	Spell(const char* name, const char* description, int id);
-	Spell(const char* name, String& description, int id);
-	Spell(String& name, const char* description, int id);
-	Spell(String& name, String& description, int id);
+	Spell(int id);
 
 	~Spell();
 
 public:
 
 	void Cast();
+	void Description();
 
 private:
 
 	String name;
 	String desc;
 
-	int spellID;
+	int dmgClamp[2] = { 0,0 };
+	int manaCost = 0;
 
+	const int spellID = -1;
+	int* IDptr = const_cast<int*>(&spellID);
 };
-

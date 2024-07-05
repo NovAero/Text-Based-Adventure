@@ -5,6 +5,7 @@ Object::Object()
 {
 	name = "N/A";
 	desc = "Empty";
+
 }
 
 Object::Object(const char* name, const char* description)
@@ -35,22 +36,19 @@ Object::~Object()
 {
 }
 
+
+
 void Object::Name() const
 {
-
 	cout << name.GetData();
-
 }
 
 void Object::Description() const
 {
-	
 	cout << desc.GetData();
-
 }
 
 void Object::Use() const
 {
-	cout << "you use ";
-	Name();
+	cout << "you use " << name.GetData();
 }

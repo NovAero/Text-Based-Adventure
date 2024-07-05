@@ -18,6 +18,23 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Assessment_1_Task_4.cpp" />
+    <ClCompile Include="src\GameController.cpp" />
+    <ClCompile Include="src\Object.cpp" />
+    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Room.cpp" />
+    <ClCompile Include="src\Spell.cpp" />
+    <ClCompile Include="src\String.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\GameController.h" />
+    <ClInclude Include="src\Object.h" />
+    <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\Room.h" />
+    <ClInclude Include="src\Spell.h" />
+    <ClInclude Include="src\String.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -126,23 +143,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\String Utility Class\String.cpp" />
-    <ClCompile Include="Assessment_1_Task_4.cpp" />
-    <ClCompile Include="GameController.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Room.cpp" />
-    <ClCompile Include="Spell.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\String Utility Class\String.h" />
-    <ClInclude Include="GameController.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Room.h" />
-    <ClInclude Include="Spell.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
