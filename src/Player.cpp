@@ -16,8 +16,6 @@ Player::~Player()
 {
 }
 
-
-
 void Player::Cast(int spellID)
 {
 	if (FindSpell(spellID) == true) {
@@ -32,9 +30,16 @@ void Player::Cast(String& spellName)
 	//If the spell is in the players inventory, casts it
 	if (FindSpell(spellName) == true) {
 		Spell spelltmp = spellName;
-		if(mana >= spelltmp.manaCost)
-		cout << "You cast " << spelltmp.NameData();
-		return;
+
+		if(mana >= spelltmp.GetManaCost()){
+			cout << "You cast " << spelltmp.NameData();
+			return;
+		}
+		else {
+			cout << "Not enough mana";
+			return;
+		}
+		
 	}
 	//Else, you dont know/ it doesn't exist
 	cout << "You don't know that spell";

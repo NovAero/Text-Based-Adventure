@@ -51,11 +51,11 @@ public:
 
 private:
 
-	int dmgClamp[2] = { 0,0 };
-	int manaCost = 0;
-
 	String name;
 	String desc;
+	
+	int dmgClamp[2] = { 0,0 };
+	int manaCost = 0;
 
 	const int spellID = -1; //Default spellID is -1
 	int* IDptr = const_cast<int*>(&spellID); //Const cast to set spellID only once on creation, or on changing access

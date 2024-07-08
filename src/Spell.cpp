@@ -1,7 +1,7 @@
 #include "Spell.h"
 
 Spell::Spell()
-{ //Defaults to -1, name is "NULL". desc is "INVALID ID"
+{ //Defaults ID to -1, name is "NULL". desc is "INVALID ID"
 	SetDataID(spellID);
 }
 
@@ -72,8 +72,6 @@ bool Spell::operator!=(const String& cmp)
 {
 	return (name != cmp);
 }
-
-//Public Functions
 
 //Simple get functions for private variables
 

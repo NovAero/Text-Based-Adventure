@@ -3,6 +3,7 @@
 
 class Object
 {
+
 public:
 
 	Object();
@@ -16,13 +17,19 @@ public:
 
 public:
 
-	void Name() const;
-	void Description() const;
-	void Use() const;
+	//const char* return types for printability inside game manager
+
+	virtual const char* Name();
+	virtual const char* Description();
+	virtual const char* Use();
 
 private:
 
 	String name;
 	String desc;
+
+	const int itemID = -1;
+
+	bool isInvisible = false;
 
 };

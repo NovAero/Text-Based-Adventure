@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Assessment_1_Task_4.cpp" />
+    <ClCompile Include="src\Cat.cpp" />
     <ClCompile Include="src\GameController.cpp" />
     <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\Player.cpp" />
@@ -28,6 +29,7 @@
     <ClCompile Include="src\String.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Cat.h" />
     <ClInclude Include="src\GameController.h" />
     <ClInclude Include="src\Object.h" />
     <ClInclude Include="src\Player.h" />

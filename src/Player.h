@@ -8,7 +8,7 @@ public:
 
 	Player(const char* name, int luck);
 	Player(String& name, int luck);
-
+	 
 	~Player();
 
 public:
@@ -22,6 +22,7 @@ public:
 	void Interact();
 
 	void DisplayInventory();
+	void DisplaySpellbook();
 
 	bool FindSpell(int spellID);
 	bool FindSpell(String& find);

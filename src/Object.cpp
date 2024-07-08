@@ -5,50 +5,44 @@ Object::Object()
 {
 	name = "N/A";
 	desc = "Empty";
-
 }
-
 Object::Object(const char* name, const char* description)
 {
 	this->name = name;
 	desc = description;
 }
-
 Object::Object(const char* name, String& description)
 {
 	this->name = name;
 	desc = description;
 }
-
 Object::Object(String& name, const char* description)
 {
 	this->name = name;
 	desc = description;
 }
-
 Object::Object(String& name, String& description)
 {
 	this->name = name;
 	desc = description;
 }
-
 Object::~Object()
 {
 }
 
 
 
-void Object::Name() const
+const char* Object::Name() 
 {
-	cout << name.GetData();
+	return name.GetData();
 }
 
-void Object::Description() const
+const char* Object::Description() 
 {
-	cout << desc.GetData();
+	return desc.GetData();
 }
 
-void Object::Use() const
+const char* Object::Use() 
 {
-	cout << "you use " << name.GetData();
+	return "fix later";
 }
