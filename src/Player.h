@@ -8,21 +8,25 @@ public:
 
 	Player(const char* name, int luck);
 	Player(String& name, int luck);
+
 	~Player();
 
 public:
 
 	void Attack();
+
 	void Cast(int spellID);
 	void Cast(String& spellName);
 	void Cast(const char* spellName);
 
-	void interact();
+	void Interact();
 
 	void DisplayInventory();
+
 	bool FindSpell(int spellID);
 	bool FindSpell(String& find);
 	bool FindSpell(const char* find);
+
 	void GiveSpellAccess(int spellID);
 
 	void Hurt(int damage);

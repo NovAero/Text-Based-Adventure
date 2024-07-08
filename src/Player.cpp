@@ -27,7 +27,6 @@ void Player::Cast(int spellID)
 
 	cout << "You don't know that spell";
 }
-
 void Player::Cast(String& spellName)
 {
 	//If the spell is in the players inventory, casts it
@@ -40,7 +39,6 @@ void Player::Cast(String& spellName)
 	//Else, you dont know/ it doesn't exist
 	cout << "You don't know that spell";
 }
-
 void Player::Cast(const char* spellName)
 {
 	//Conversion for string literal to string obj, passes values

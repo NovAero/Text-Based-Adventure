@@ -27,32 +27,36 @@ public:
 
 public:
 
-	void Cast();
-	
-	String& NameRef(); //Returns the String object of name
-	const char* NameData(); //Returns the string literal of name
+	//Returns the String object of name
+	String& NameRef();
+	//Returns the string literal of name
+	const char* NameData(); 
+	//Returns a printable description
+	const char* Description(); 
+	//Returns spell ID
+	const int GetID() const; 
+	//Returns const mana cost
+	const int GetManaCost() const; 
+	//Returns dmgClamp[0]
+	const int GetMinDmg() const; 
+	//Return dmgClamp[1]
+	const int GetMaxDmg() const; 
 
-	const char* Description(); //Returns a printable description
-
-	int GetID() const; //Returns spell ID
-
-	void SetDataID(int id); //Sets the data by passing in a valid ID
-	void SetDataName(const char* name); //Sets the data by a string literal
-	void SetDataName(String& name); //Sets the data by a String 
-
-public: //Allows dmg and manacost to be accessed in other classes, but not changed
-
-	const int dmgClamp[2] = { 0,0 }; //{ Minimum, Maximum }
-	const int manaCost = 0;
+	//Sets the data by passing in a valid ID
+	void SetDataID(int id); 
+	//Sets the data by a string literal
+	void SetDataName(const char* name); 
+	//Sets the data by a String 
+	void SetDataName(String& name); 
 
 private:
+
+	int dmgClamp[2] = { 0,0 };
+	int manaCost = 0;
 
 	String name;
 	String desc;
 
 	const int spellID = -1; //Default spellID is -1
-	
 	int* IDptr = const_cast<int*>(&spellID); //Const cast to set spellID only once on creation, or on changing access
-	int* dmgPtr = const_cast<int*>(dmgClamp);
-	int* manaPtr = const_cast<int*>(&manaCost);
 };

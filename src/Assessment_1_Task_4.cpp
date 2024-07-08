@@ -14,5 +14,9 @@ int main() {
 	player.GiveSpellAccess(8);
 	player.GiveSpellAccess(4);
 
-	player.Cast("fairie's' sto n e fireball");
-} 
+	player.Cast("fairie's' sto n e");
+	player.Cast("fair/ies ' ston'e");
+
+	cout << spellbook[1].dmgClamp[0];
+	cout << spellbook[1].dmgClamp[1];
+}
