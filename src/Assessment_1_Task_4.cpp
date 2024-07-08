@@ -31,6 +31,6 @@ int main() {
 
 	Cat kitty;
 
-	cout << kitty.Interact(false);
+	cout << kitty.Interact(true, 765);
 
 }

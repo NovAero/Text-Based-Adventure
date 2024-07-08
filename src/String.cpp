@@ -31,6 +31,11 @@ String::String(const String& copy)
 	SetData(const_cast<char*>(copy.GetData()));
 }
 
+String::String(int number)
+{
+	SetData(IntToString(number));
+}
+
 String::~String()
 {
 	if (data != nullptr) {
@@ -164,6 +169,40 @@ void String::SetData(const char* toSet)
 	if (data[l - 1] != '\0') {
 		data[l] = '\0';
 	}
+}
+
+const char* String::IntToString(int num)
+{
+	int charlen = 0;
+	int iterator = 1;
+	int div = 10;
+
+	while (charlen == 0) {
+		if (num / div == 0) {
+			//Checks if num truncates to 0, meaning it is
+			//smaller than the divider's size (tens, hundreds, millions, etc)
+			charlen = iterator;
+			div /= 10;
+			break;
+		}
+		div *= 10; //multiplies by 10 to go to next digit size
+		iterator++; // iterator == digit size (3 = 100, 4 = 1000, 5 = 10,000 , etc)
+	}
+
+	//Sets temp to the size of the number + 1 for '\0' char
+	char* temp = new char[charlen + 1];
+
+	for (int i = 0; i < charlen; ++i) {
+		temp[i] = (num / div) + 48; //Sets temp[i] to the first number of num
+		num -= (num / div) * div; //removes the first place of num
+		div /= 10; //lowers div by factor of 10 (to the next digit place)
+	}
+
+	if (temp[charlen] != '\0') {
+		temp[charlen] = '\0';
+	}
+
+	return temp;
 }
 
 size_t String::len() const

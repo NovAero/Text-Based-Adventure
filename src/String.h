@@ -22,6 +22,8 @@ public: // Constructors //
 	String(String& copy);
 	String(const String& copy);
 
+	String(int number);
+
 	~String();
 	
 public: // Overrides //
@@ -46,6 +48,7 @@ public: // Functions //
 
 	void SetData(char toSet);
 	void SetData(const char* toSet);
+	const char* IntToString(int num);
 
 	size_t len() const;
 	

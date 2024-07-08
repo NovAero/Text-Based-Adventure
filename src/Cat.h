@@ -13,7 +13,8 @@ public:
 	const char* Name() override;
 	const char* Description() override;
 
-	const char* Interact(bool SwAisActive);
+	const char* Interact();
+	const char* Interact(bool SwAisActive, int numOfHidden);
 
 	void Pet();
 
