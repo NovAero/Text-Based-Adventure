@@ -22,6 +22,11 @@ const char* Cat::Description()
 	return desc.GetData();
 }
 
+const char* Cat::Use()
+{
+	return nullptr;
+}
+
 const char* Cat::Interact()
 {
 	converse = "Meow";
@@ -32,7 +37,7 @@ const char* Cat::Interact(bool SwAisActive, int numOfHidden)
 {
 	String test = numOfHidden;
 
-	if(SwAisActive == true){
+	if(SwAisActive == true) {
 		converse = "There are [num] hidden items in this room, meow";
 		converse.Replace("[num]", test);
 

@@ -20,6 +20,11 @@ public:
 
 private:
 
+	//Deprecated, use Interact()
+	const char* Use() override;
+
+private:
+
 	bool purring = false;
 
 	String name;
