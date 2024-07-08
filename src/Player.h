@@ -6,15 +6,24 @@ class Player
 {
 public:
 
+	Player(const char* name, int luck);
 	Player(String& name, int luck);
 	~Player();
 
 public:
 
 	void Attack();
+	void Cast(int spellID);
+	void Cast(String& spellName);
+	void Cast(const char* spellName);
+
 	void interact();
+
 	void DisplayInventory();
-	void DisplaySpellbook();
+	bool FindSpell(int spellID);
+	bool FindSpell(String& find);
+	bool FindSpell(const char* find);
+	void GiveSpellAccess(int spellID);
 
 	void Hurt(int damage);
 	void SetMana(int mana);
@@ -32,7 +41,5 @@ private:
 	const int maxMana = 15;
 
 	Object inventory[5];
-	Spell spellbook[10] = { 0,1,2,3,4,5,6,7,8,9 };
-	bool spellAccess[10] = { false, false, false, false, false, false, false, false, false, false };
-
+	Spell spellbook[10];
 };
