@@ -99,3 +99,13 @@ void Player::GiveSpellAccess(int spellID)
 { //Sets the player's spellbook at index spellID to corresponding spell, essential bool flip
 	spellbook[spellID].SetDataID(spellID);
 }
+
+void Player::Hurt(int damage)
+{
+	health -= damage;
+}
+
+void Player::SetMana(int mana)
+{
+	this->mana = mana;
+}
