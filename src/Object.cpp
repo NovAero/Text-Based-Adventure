@@ -35,7 +35,6 @@ Object::~Object()
 {
 }
 
-
 void Object::SetData(String& name, String& description, int ID, bool isInvis)
 {
 	this->name = name;

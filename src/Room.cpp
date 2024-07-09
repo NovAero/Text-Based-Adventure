@@ -6,8 +6,16 @@ Room::Room()
 	posY = 7;
 }
 
+Room::Room(Object* items, int x, int y)
+{
+	SetContents(items);
+	posX = x;
+	posY = y;
+}
+
 Room::~Room()
 {
+
 }
 
 
@@ -43,18 +51,26 @@ void Room::ShowContents(bool fStoneActive)
 	}
 }
 
+int Room::FindFirstEmpty()
+{
+	int i = 0;
+	for (Object& o : itemsInRoom) {
+
+		if (o.GetID() == -1) {
+			return i;
+		}
+		++i;
+	}
+	return -1;
+}
+
 void Room::AppendItem(Object& obj)
 {
-	for (Object& i : itemsInRoom) {
-
-		if (i.GetID() == -1) {
-			i.CopyData(obj);
-			cout << "Added " << obj.Name() << " to room " << endl;
-			return;
-		}
-
+	if (FindFirstEmpty() != -1) {
+		itemsInRoom[FindFirstEmpty()].CopyData(obj);
+		return;
 	}
-	cout << "Room is full" << endl;
+	cout << "No Empty Slots";
 }
 
 void Room::RemoveItem(Object& obj)
@@ -69,4 +85,15 @@ void Room::RemoveItem(Object& obj)
 
 	}
 	cout << "Item is not in room" << endl;
+}
+
+void Room::SetContents(Object* items)
+{
+	int numOfItems = sizeof(*items) / sizeof(Object);
+
+	int j = 0;
+
+	for (int i = 0; i <= numOfItems && i < MAX_ITEM_COUNT; i++) {
+		AppendItem(items[i]);
+	}
 }

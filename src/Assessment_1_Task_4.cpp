@@ -6,24 +6,20 @@
 #include "Cat.h"
 #include "Room.h"
 
+
 int main() {
 
-	Room test;
-	
+	const int testint = 5;
+
 	Cat cat1;
 	Object obj("deez", "nuts", 3, true);
 
-	test.AppendItem(obj);
-	test.AppendItem(cat1);
-	test.itemsInRoom[0].ToggleInivs();
+	Object objtest[testint];
 
-	test.ShowContents(false);
+	objtest[0].CopyData(obj);
+	objtest[1].CopyData(cat1);
 
-	test.itemsInRoom[0].ToggleInivs();
-
-	test.ShowContents(false);
-
-	test.RemoveItem(obj);
+	Room test(objtest, 1 , 1);
 
 	test.ShowContents(true);
 }

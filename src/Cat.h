@@ -1,6 +1,5 @@
 #pragma once
 #include "Object.h"
-#include "GameController.h"
 
 class Cat : public Object{
 public:
