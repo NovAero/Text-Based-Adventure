@@ -4,29 +4,26 @@
 #include "Object.h"
 #include "Spell.h"
 #include "Cat.h"
+#include "Room.h"
 
 int main() {
 
-	Cat kitty;
+	Room test;
+	
+	Cat cat1;
+	Object obj("deez", "nuts", 3, true);
 
-	Player player("Nova", 3);
+	test.AppendItem(obj);
+	test.AppendItem(cat1);
+	test.itemsInRoom[0].ToggleInivs();
 
-	player.AddToInventory(kitty);
+	test.ShowContents(false);
 
-	player.DisplayInventory();
+	test.itemsInRoom[0].ToggleInivs();
 
-	player.AddToInventory(kitty);
+	test.ShowContents(false);
 
-	player.GiveSpellAccess(0);
-	player.GiveSpellAccess(9);
-	player.GiveSpellAccess(1);
-	player.GiveSpellAccess(2);
-	player.GiveSpellAccess(3);
-	player.GiveSpellAccess(5);
-	player.GiveSpellAccess(6);
-	player.GiveSpellAccess(8);
-	player.GiveSpellAccess(4);
-	player.GiveSpellAccess(7);
+	test.RemoveItem(obj);
 
-	player.DisplaySpellbook();
+	test.ShowContents(true);
 }

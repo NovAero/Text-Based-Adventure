@@ -8,22 +8,28 @@ public:
 
 	Object();
 
-	Object(const char* name, const char* description);
-	Object(const char* name, String& description);
-	Object(String& name,const char* description);
-	Object(String& name, String& description);
+	Object(const char* name, const char* description, int ID, bool isInvis);
+	Object(const char* name, String& description, int ID, bool isInvis);
+	Object(String& name,const char* description, int ID, bool isInvis);
+	Object(String& name, String& description, int ID, bool isInvis);
 
 	~Object();
 
 public:
 
-	//const char* return types for printability inside game manager
-
+	void SetData(String& name, String& description, int ID, bool isInvis);
+	void SetData(const char* name, const char* description, int ID, bool isInvis);
+	void SetID(int ID);
+	
 	virtual int GetID();
+
 	virtual const char* Name();
 	virtual String& NameObj();
 	virtual const char* Description();
 	virtual const char* Use();
+
+	bool isInvisible();
+	void ToggleInivs();
 
 	void CopyData(Object& copy);
 
@@ -32,7 +38,7 @@ private:
 	String name;
 	String desc;
 
-	bool isInvisible = false;
+	bool invisible = false;
 
 	const int itemID = -1;
 

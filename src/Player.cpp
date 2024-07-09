@@ -74,7 +74,7 @@ void Player::DisplaySpellbook()
 void Player::AddToInventory(Object& toAdd)
 {
 	int s = 1;
-	for (Object i: inventory) {
+	for (Object& i: inventory) {
 
 		if (i.NameObj() == "N/A") {
 			if (InvHasCopy(toAdd) == false) {
@@ -96,7 +96,7 @@ void Player::AddToInventory(Object& toAdd)
 }
 bool Player::InvHasCopy(Object& obj)
 {
-	for (Object o: inventory) {
+	for (Object& o: inventory) {
 
 		if (o.GetID() == obj.GetID()) {
 			return true;

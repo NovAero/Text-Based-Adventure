@@ -1,6 +1,6 @@
 #include "Cat.h"
 
-Cat::Cat() : Object("Cat","A furry friend.")
+Cat::Cat() : Object("Cat","A furry friend.", 1, false)
 {
 	name = Object::Name();
 	desc = Object::Description();
@@ -32,19 +32,13 @@ const char* Cat::Use()
 	return nullptr;
 }
 
-const char* Cat::Interact()
-{
-	converse = "Meow";
-	return converse.GetData();
-}
-
 const char* Cat::Interact(bool SwAisActive, int numOfHidden)
 {
-	String test = numOfHidden;
-
 	if(SwAisActive == true) {
+		String num = numOfHidden;
+
 		converse = "There are [num] hidden items in this room, meow";
-		converse.Replace("[num]", test);
+		converse.Replace("[num]", num);
 
 		return converse.GetData();
 	}

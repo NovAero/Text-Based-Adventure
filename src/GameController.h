@@ -13,9 +13,10 @@ public:
 public:
 
 	void RunGame();
+	void LoadRoom();
+	void LoadCombat();
 
 private:
-
 
 
 };
