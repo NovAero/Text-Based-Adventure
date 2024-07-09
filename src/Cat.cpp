@@ -27,11 +27,6 @@ const char* Cat::Description()
 	return desc.GetData();
 }
 
-const char* Cat::Use()
-{
-	return nullptr;
-}
-
 const char* Cat::Interact(bool SwAisActive, int numOfHidden)
 {
 	if(SwAisActive == true) {

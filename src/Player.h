@@ -32,6 +32,8 @@ public:
 	void GiveSpellAccess(int spellID);
 
 	void Hurt(int damage);
+
+	int GetMana();
 	void SetMana(int mana);
 
 private:

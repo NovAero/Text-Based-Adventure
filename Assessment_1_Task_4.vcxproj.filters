@@ -25,6 +25,9 @@
     <ClCompile Include="src\Cat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ManaFtn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Object.h">
@@ -46,6 +49,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Cat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ManaFtn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

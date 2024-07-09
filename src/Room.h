@@ -1,7 +1,6 @@
 #pragma once
 #include "Object.h"
 #include "String.h"
-#include "Cat.h"
 
 #define MAX_ITEM_COUNT 10
 

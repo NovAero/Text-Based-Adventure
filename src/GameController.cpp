@@ -18,3 +18,10 @@ void GameController::GenerateRooms(Object* room00, Object* room01, Object* room0
 	rooms[2][2].SetContents(room22);
 
 }
+
+void GameController::PlayerInput()
+{
+
+	
+
+}

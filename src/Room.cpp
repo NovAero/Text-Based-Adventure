@@ -40,7 +40,7 @@ void Room::ShowContents(bool fStoneActive)
 		}
 
 		if (v.isInvisible() == true && fStoneActive == true) {
-			cout << v.Name() << " " << v.isInvisible() << endl;
+			cout << v.Name() << " " << "(invisible)" << endl;
 		}
 		else if (v.isInvisible() == true && fStoneActive != true) {
 			continue;
@@ -89,11 +89,7 @@ void Room::RemoveItem(Object& obj)
 
 void Room::SetContents(Object* items)
 {
-	int numOfItems = sizeof(*items) / sizeof(Object);
-
-	int j = 0;
-
-	for (int i = 0; i <= numOfItems && i < MAX_ITEM_COUNT; i++) {
+	for (int i = 0; i < MAX_ITEM_COUNT; i++) {
 		AppendItem(items[i]);
 	}
 }

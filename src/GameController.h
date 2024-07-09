@@ -20,6 +20,8 @@ public:
 
 	void GenerateRooms(Object* room00, Object* room01, Object* room02, Object* room10, Object* room11, Object* room12, Object* room20, Object* room21, Object* room22);
 
+	void PlayerInput();
+
 	void LoadCombat();
 
 private:

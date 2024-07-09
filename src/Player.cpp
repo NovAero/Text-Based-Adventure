@@ -157,7 +157,15 @@ void Player::Hurt(int damage)
 	health -= damage;
 }
 
+int Player::GetMana()
+{
+	return mana;
+}
+
 void Player::SetMana(int mana)
 {
 	this->mana = mana;
+	if (this->mana >= maxMana) {
+		this->mana = maxMana;
+	}
 }

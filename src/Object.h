@@ -26,7 +26,7 @@ public:
 	virtual const char* Name();
 	virtual String& NameObj();
 	virtual const char* Description();
-	virtual const char* Use();
+	virtual void Use();
 
 	bool isInvisible();
 	void ToggleInivs();

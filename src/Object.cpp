@@ -76,9 +76,9 @@ const char* Object::Description()
 	return desc.GetData();
 }
 
-const char* Object::Use() 
+void Object::Use() 
 {
-	return "fix later";
+
 }
 
 bool Object::isInvisible()

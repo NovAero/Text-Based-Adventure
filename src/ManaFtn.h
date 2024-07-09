@@ -1,11 +1,12 @@
 #pragma once
 #include "Object.h"
+#include "Player.h"
 
-class Cat : public Object{
+class ManaFtn : public Object {
 public:
 
-	Cat();
-	~Cat();
+	ManaFtn();
+	~ManaFtn();
 
 public:
 
@@ -13,20 +14,18 @@ public:
 	const char* Name() override;
 	const char* Description() override;
 
-	const char* Interact(bool SwAisActive, int numOfHidden);
-
-	void Pet();
+	void Use(Player& plr);
 
 private:
 
-	bool purring = false;
 	bool invisible = false;
 
 	String name;
 	String desc;
 
-	String converse;
+	int uses = 3;
 
-	const int itemID = 1;
+	const int itemID = 2;
 
 };
+
