@@ -10,6 +10,7 @@ public:
 
 public:
 
+	int GetID() override;
 	const char* Name() override;
 	const char* Description() override;
 
@@ -31,5 +32,7 @@ private:
 	String desc;
 
 	String converse;
+
+	const int itemID = 1;
 
 };

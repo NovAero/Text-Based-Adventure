@@ -9,7 +9,24 @@ int main() {
 
 	Cat kitty;
 
-	cout << kitty.Description();
-	kitty.Pet();
-	cout << kitty.Description();
+	Player player("Nova", 3);
+
+	player.AddToInventory(kitty);
+
+	player.DisplayInventory();
+
+	player.AddToInventory(kitty);
+
+	player.GiveSpellAccess(0);
+	player.GiveSpellAccess(9);
+	player.GiveSpellAccess(1);
+	player.GiveSpellAccess(2);
+	player.GiveSpellAccess(3);
+	player.GiveSpellAccess(5);
+	player.GiveSpellAccess(6);
+	player.GiveSpellAccess(8);
+	player.GiveSpellAccess(4);
+	player.GiveSpellAccess(7);
+
+	player.DisplaySpellbook();
 }

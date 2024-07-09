@@ -12,6 +12,11 @@ Cat::~Cat()
 {
 }
 
+int Cat::GetID()
+{
+	return this->itemID;
+}
+
 const char* Cat::Name()
 {
 	return name.GetData();

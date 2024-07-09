@@ -32,9 +32,19 @@ Object::~Object()
 
 
 
-const char* Object::Name() 
+int Object::GetID()
+{
+	return itemID;
+}
+
+const char* Object::Name()
 {
 	return name.GetData();
+}
+
+String& Object::NameObj()
+{
+	return name;
 }
 
 const char* Object::Description() 
@@ -45,4 +55,12 @@ const char* Object::Description()
 const char* Object::Use() 
 {
 	return "fix later";
+}
+
+void Object::CopyData(Object& copy)
+{
+	this->name = copy.name;
+	this->desc = copy.desc;
+	*IDPtr = copy.GetID();
+	this->isInvisible = copy.isInvisible;
 }

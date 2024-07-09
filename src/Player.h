@@ -19,10 +19,11 @@ public:
 	void Cast(String& spellName);
 	void Cast(const char* spellName);
 
-	void Interact();
-
 	void DisplayInventory();
 	void DisplaySpellbook();
+
+	void AddToInventory(Object& toAdd);
+	bool InvHasCopy(Object& obj);
 
 	bool FindSpell(int spellID);
 	bool FindSpell(String& find);

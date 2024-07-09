@@ -51,17 +51,71 @@ void Player::Cast(const char* spellName)
 	Cast(pass);
 }
 
+void Player::DisplayInventory()
+{
+	int s = 1;
+	for (Object i: inventory) {
+		cout << "Slot " << s << " " << i.Name() << " Description " << i.Description() <<  endl;
+		++s;
+	}
+}
+
+void Player::DisplaySpellbook()
+{
+	int k = 1;
+	for (Spell s : spellbook) {
+		if (FindSpell(s.GetID()) == true) {
+			cout << "Spell " << k << " " << s.NameData() << endl;
+			k++;
+		}
+	}
+}
+
+void Player::AddToInventory(Object& toAdd)
+{
+	int s = 1;
+	for (Object i: inventory) {
+
+		if (i.NameObj() == "N/A") {
+			if (InvHasCopy(toAdd) == false) {
+				i.CopyData(toAdd);
+				cout << "Added " << toAdd.Name() << " to inventory slot " << s << endl;
+				return;
+			}
+			else {
+				cout << "Your cannot carry any more of that item!" << endl;
+				return;
+			}
+			s++;
+		}
+
+	}
+
+	cout << "Inventory is full!" << endl;
+
+}
+bool Player::InvHasCopy(Object& obj)
+{
+	for (Object o: inventory) {
+
+		if (o.GetID() == obj.GetID()) {
+			return true;
+		}
+	}
+	return false;
+}
+
 bool Player::FindSpell(int spellID)
 { //Binary search for spellID in player's spellbook, more effective at larger sizes
 	int l = 0;
 	int r = 9;
 
+	if (spellbook[spellID].GetID() == -1) {//If spellID is -1, spell isnt unlocked
+		return false;
+	}
+
 	while (l <= r) {
 		int m = ((l + r) / 2);
-
-		if (spellbook[spellID].GetID() == -1) {//If spellID is -1, spell isnt unlocked
-			return false;
-		}
 
 		if (m == spellID) {
 			return true;
@@ -76,7 +130,6 @@ bool Player::FindSpell(int spellID)
 	}
 	return false;
 }
-
 bool Player::FindSpell(String& find)
 {
 	Spell temp = find;
@@ -85,7 +138,6 @@ bool Player::FindSpell(String& find)
 	}
 	return true;
 }
-
 bool Player::FindSpell(const char* find)
 {
 	Spell temp = find;
