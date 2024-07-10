@@ -130,15 +130,7 @@ void Room::Description(int roomX, int roomY)
 	int length = 0;
 
 	if (descToSeek > 0){ //If iterator is 0 it doesnt need iterator, thus skips a step, otherwise keep going
-		while (iterator != descToSeek - 1) //Finds position in file BEFORE text, for seekg
-		{
-			file.get(singleCharacter) >> noskipws;
-			if (singleCharacter == END_OF_LINE) { //if found end char (#) add to iterator
-				iterator++;
-			}
-			charsDeep++; //add to charsdeep every char to track how many bytes deep it needs to seek
-		}
-
+		
 		while (iterator != descToSeek) {
 			file.get(singleCharacter) >> noskipws;
 			if (singleCharacter == END_OF_LINE) { //if found end char (#) add to iterator
@@ -151,7 +143,6 @@ void Room::Description(int roomX, int roomY)
 		}
 
 		retDesc = new char[length + 1 ]; //Makes new char[] == length of description
-		file.seekg(charsDeep - length);
 		charsDeep = 0; //Sets charsDeep back to 0 again, to iterate over temp[] to set it's contents
 
 		while (charsDeep < length) //Sets contents of temp until end of Description
