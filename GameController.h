@@ -7,6 +7,7 @@
 #include "Cat.h"
 #include "ManaFtn.h"
 #include "Enemy.h"
+#include "Scroll.h"
 
 class GameController
 {

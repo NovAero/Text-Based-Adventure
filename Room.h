@@ -14,11 +14,14 @@ public:
 
 public:
 
+	void SetAllData(Object* contents, const char* name, const char* desc, int x, int y);
+
 	void SetCoords(int x, int y);
 	int GetX();
 	int GetY();
 
 	void ShowContents(bool fStoneActive);
+	bool HasItemID(int ID);
 	const char* Name();
 	const char* Description();
 

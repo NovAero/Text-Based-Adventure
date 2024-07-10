@@ -7,6 +7,17 @@ Object::Object()
 	desc = "Empty";
 
 }
+Object::Object(int spellID, int ID, bool isInvis)
+{
+	Spell spell(spellID);
+
+	String nTemp = spell.NameData();
+	String dTemp = "A dusty bound scroll, which when read reveals the secrets of casting ";
+	dTemp.Suffix(nTemp);
+	nTemp.Prefix("Scroll of ");
+
+	SetData(nTemp, dTemp, ID, isInvis);
+}
 Object::Object(const char* name, const char* description, int ID, bool isInvis)
 {
 	String nTemp = name;
@@ -78,7 +89,7 @@ const char* Object::Description()
 
 void Object::Use() 
 {
-
+	
 }
 
 bool Object::isInvisible()

@@ -8,10 +8,7 @@ Room::Room()
 
 Room::Room(Object* items, const char* name, const char* description, int x, int y)
 {
-	SetName(name);
-	SetDesc(description);
-	SetContents(items);
-	SetCoords(x, y);
+	SetAllData(items, name, description, x, y);
 }
 
 Room::~Room()
@@ -19,6 +16,14 @@ Room::~Room()
 
 }
 
+
+void Room::SetAllData(Object* contents, const char* name, const char* desc, int x, int y)
+{
+	SetName(name);
+	SetDesc(desc);
+	SetContents(contents);
+	SetCoords(x, y);
+}
 
 void Room::SetCoords(int x, int y)
 {
@@ -38,14 +43,13 @@ int Room::GetY()
 
 void Room::ShowContents(bool fStoneActive)
 {
-	system("CLS");
 	String contents = "In the room you can see ";
 	String find;
 	String replace;
 
 	for (Object v : itemsInRoom) {
 
-		if (v.GetID() == -1) {
+		if (v.GetID() == -1 || v.Name() == "Exit Gate") {
 			continue;
 		}
 		if (v.isInvisible() == true && fStoneActive == true) {
@@ -77,6 +81,16 @@ void Room::ShowContents(bool fStoneActive)
 	contents.Replace(".,", ".");
 
 	cout << contents.GetData();
+}
+
+bool Room::HasItemID(int ID)
+{
+	for (Object h : itemsInRoom) {
+		if (h.GetID() == ID) {
+			return true;
+		}
+	}
+	return false;
 }
 
 const char* Room::Name()

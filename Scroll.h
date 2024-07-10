@@ -21,8 +21,8 @@ public:
 
 private:
 
-    String name = "Scroll of ";
-    String desc = "A bound scroll, which when used, reveals the secrets of how to cast [spell]";
+    String name;
+    String desc;
 
     bool invisible = false;
 

@@ -4,6 +4,7 @@ class Enemy : public Object {
 public:
 
 	Enemy();
+	Enemy(const char* name, const char* description);
 
 	~Enemy();
 

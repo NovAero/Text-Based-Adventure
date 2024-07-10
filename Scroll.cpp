@@ -1,10 +1,11 @@
 #include "Scroll.h"
 
-Scroll::Scroll(int SpellID) 
+Scroll::Scroll(int SpellID) : Object(SpellID, itemID, invisible)
 {
 	spell.SetDataID(SpellID);
-	name.Suffix(spell.NameData());
-	desc.Replace("[spell]", spell.NameRef());
+
+	name = Object::Name();
+	desc = Object::Description();
 }
 
 Scroll::~Scroll()
@@ -13,17 +14,17 @@ Scroll::~Scroll()
 
 int Scroll::GetID()
 {
-	return itemID;
+	return this->itemID;
 }
 
 const char* Scroll::Name()
 {
-	return name.GetData();
+	return this->name.GetData();
 }
 
 const char* Scroll::Description()
 {
-	return desc.GetData();
+	return this->desc.GetData();
 }
 
 void Scroll::Use(Player& player)

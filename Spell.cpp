@@ -139,7 +139,7 @@ void Spell::SetDataID(int id)
 		break;
 	case 4:
 		*IDptr = id;
-		name = "Fairie's Stone";
+		name = "Faerie's Stone";
 		desc = "You summon a monocle to peer into other realms, reveals objects hidden by invisibilty";
 		manaCost = 5;
 		break;
@@ -203,7 +203,7 @@ void Spell::SetDataName(String& find)
 		}
 	}
 	//list of all spells without spaces or apostrophes, for the find func
-	String SpellList = "dispelmagiclevitatefireballfrostdartfairiesstonespeakwithanimalsjoltlightorbmagicmissilewaterwhip";
+	String SpellList = "dispelmagiclevitatefireballfrostdartfaeriesstonespeakwithanimalsjoltlightorbmagicmissilewaterwhip";
 
 	//Finds the string after its been formatted, if it doesnt match any, sets to empty
 	switch (SpellList.Find(find))
@@ -238,7 +238,7 @@ void Spell::SetDataName(String& find)
 		break;
 	case 36:
 		*IDptr = 4;
-		name = "Fairie's Stone";
+		name = "Faerie's Stone";
 		desc = "You summon a monocle to peer into other realms, reveals objects hidden by invisibilty";
 		manaCost = 5;
 		break;
