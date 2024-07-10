@@ -27,6 +27,8 @@ public:
 
 	void LoadCombat();
 
+
+
 private:
 
 	String command;

@@ -1,6 +1,7 @@
 #pragma once
 #include "Object.h"
 #include "String.h"
+#include <fstream>
 
 #define MAX_ITEM_COUNT 10
 
@@ -23,7 +24,7 @@ public:
 	void ShowContents(bool fStoneActive);
 	bool HasItemID(int ID);
 	const char* Name();
-	const char* Description();
+	void Description(int roomX, int roomY);
 
 	int FindFirstEmpty();
 

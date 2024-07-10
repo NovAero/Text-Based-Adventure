@@ -51,6 +51,7 @@ public: // Functions //
 	const char* IntToString(int num);
 
 	size_t len() const;
+	int unsafeLen() const;
 	
 	char& CharAt(size_t index);
 	const char& CharAt(size_t index) const;

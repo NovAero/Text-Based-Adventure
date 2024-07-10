@@ -56,10 +56,7 @@ void GameController::RunGame()
 
 void GameController::LoadRoom(Room& toLoad)
 {
-	system("CLS");
-	cout << "You enter the " << toLoad.Name() << "\n\n";
-	cout << toLoad.Description();
-	toLoad.ShowContents(false);
+	toLoad.Description(toLoad.GetX(), toLoad.GetY());
 }
 
 void GameController::LoadRoom(int x, int y)
@@ -69,7 +66,6 @@ void GameController::LoadRoom(int x, int y)
 
 void GameController::GenerateRooms(Object* room00, Object* room01, Object* room02, Object* room10, Object* room11, Object* room12, Object* room20, Object* room21, Object* room22)
 {
-	
 
 	rooms[0][0].SetAllData(room00, "The Ossuary", 0, 0);
 	rooms[0][1].SetAllData(room01, "The Cathedral", 0, 1);

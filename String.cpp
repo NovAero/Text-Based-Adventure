@@ -212,6 +212,23 @@ size_t String::len() const
 
 }
 
+int String::unsafeLen() const
+{
+	int size = 0; 
+
+	bool sizeFound = false;
+
+	while(sizeFound == false){
+
+		if (data[size] <= 32 && data[size] >= 126) { //Checks if the char's ascii value is between 32 (space) and 126 ( ~ )
+			size++;
+		}
+		else {
+			return size;
+		}
+	}
+}
+
 char& String::CharAt(size_t index)
 {
 	//Throw error if index is out of range
