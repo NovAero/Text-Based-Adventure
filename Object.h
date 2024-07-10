@@ -4,6 +4,7 @@
 #define CAT_ID 1
 #define MANAFTN_ID 2
 #define ENEMY_ID 3
+#define SCROLL_ID 4
 
 class Object
 {
