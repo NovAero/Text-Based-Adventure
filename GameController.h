@@ -9,6 +9,7 @@
 #include "ManaFtn.h"
 #include "Enemy.h"
 #include "Scroll.h"
+#include "Door.h"
 
 class GameController
 {
