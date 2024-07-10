@@ -53,7 +53,7 @@ void Object::SetData(const char* name, const char* description, int ID, bool isI
 
 void Object::SetID(int ID)
 {
-	*IDPtr = ID;
+	itemID = ID;
 }
 
 int Object::GetID()
@@ -95,6 +95,6 @@ void Object::CopyData(Object& copy)
 {
 	this->name = copy.name;
 	this->desc = copy.desc;
-	*IDPtr = copy.GetID();
+	itemID = copy.GetID();
 	invisible = copy.isInvisible();
 }

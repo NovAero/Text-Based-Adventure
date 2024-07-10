@@ -9,14 +9,18 @@ class Room
 public:
 
 	Room();
-	Room(Object* items, int x, int y);
+	Room(Object* items, const char* name, const char* description, int x, int y);
 	~Room();
 
 public:
 
-	void GetCoords();
+	void SetCoords(int x, int y);
+	int GetX();
+	int GetY();
 
 	void ShowContents(bool fStoneActive);
+	const char* Name();
+	const char* Description();
 
 	int FindFirstEmpty();
 
@@ -24,13 +28,15 @@ public:
 	void RemoveItem(Object& obj);
 
 	void SetContents(Object* items);
+	void SetName(const char* name);
+	void SetDesc(const char* desc);
 
 
 public:
 
+	String roomName;
+	String roomDesc;
 	Object itemsInRoom[MAX_ITEM_COUNT];
-
-private:
 
 	int posX = -1;
 	int posY = -1;

@@ -25,7 +25,7 @@ private:
 
 	int uses = 3;
 
-	const int itemID = 2;
+	int itemID = MANAFTN_ID;
 
 };
 

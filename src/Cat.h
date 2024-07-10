@@ -27,6 +27,6 @@ private:
 
 	String converse;
 
-	const int itemID = 1;
+	int itemID = CAT_ID;
 
 };

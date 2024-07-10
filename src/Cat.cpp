@@ -1,6 +1,6 @@
 #include "Cat.h"
 
-Cat::Cat() : Object("Cat","A furry friend.", 1, false)
+Cat::Cat() : Object("Cat","A furry friend.", CAT_ID, false)
 {
 	name = Object::Name();
 	desc = Object::Description();

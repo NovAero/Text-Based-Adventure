@@ -1,6 +1,10 @@
 #pragma once
 #include "String.h"
 
+#define CAT_ID 1
+#define MANAFTN_ID 2
+#define ENEMY_ID 3
+
 class Object
 {
 
@@ -40,7 +44,5 @@ private:
 
 	bool invisible = false;
 
-	const int itemID = -1;
-
-	int* IDPtr = const_cast<int*>(&itemID);
+	int itemID = -1;
 };

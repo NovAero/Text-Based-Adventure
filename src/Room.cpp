@@ -2,15 +2,16 @@
 
 Room::Room()
 {
-	posX = 10;
-	posY = 7;
+	posX = 0;
+	posY = 0;
 }
 
-Room::Room(Object* items, int x, int y)
+Room::Room(Object* items, const char* name, const char* description, int x, int y)
 {
+	SetName(name);
+	SetDesc(description);
 	SetContents(items);
-	posX = x;
-	posY = y;
+	SetCoords(x, y);
 }
 
 Room::~Room()
@@ -19,36 +20,73 @@ Room::~Room()
 }
 
 
-void Room::GetCoords()
+void Room::SetCoords(int x, int y)
 {
-	String strX = posX;
-	String strY = posY;
+	posX = x;
+	posY = y;
+}
 
-	String phrase = "X: [x], Y: [y]";
-	phrase.Replace("[x]", strX);
-	phrase.Replace("[y]", strY);
+int Room::GetX()
+{
+	return posX;
+}
 
-	cout << phrase.GetData() << endl;
+int Room::GetY()
+{
+	return posY;
 }
 
 void Room::ShowContents(bool fStoneActive)
 {
+	system("CLS");
+	String contents = "In the room you can see ";
+	String find;
+	String replace;
+
 	for (Object v : itemsInRoom) {
 
 		if (v.GetID() == -1) {
 			continue;
 		}
-
 		if (v.isInvisible() == true && fStoneActive == true) {
-			cout << v.Name() << " " << "(invisible)" << endl;
+			contents.Suffix("a ");
+			contents.Suffix(v.Name());
+			contents.Suffix(", ");
+			find = v.NameObj();
 		}
 		else if (v.isInvisible() == true && fStoneActive != true) {
 			continue;
 		}
 		else if (v.isInvisible() != true) {
-			cout << v.Name() << endl;
+			contents.Suffix("a ");
+			contents.Suffix(v.Name());
+			contents.Suffix(", ");
+			find = v.NameObj();
 		}
 	}
+	int len = contents.len();
+	int lastWord = FindFirstEmpty() - 1;
+	int lastWordLen = itemsInRoom[lastWord].NameObj().len();
+
+	find.Prefix("a ");
+	replace = find.GetData();
+	replace.Prefix("and ");
+	replace.Suffix(".");
+
+	contents.Replace(find, replace);
+	contents.Replace(".,", ".");
+
+	cout << contents.GetData();
+}
+
+const char* Room::Name()
+{
+	return roomName.GetData();
+}
+
+const char* Room::Description()
+{
+	return roomDesc.GetData();
 }
 
 int Room::FindFirstEmpty()
@@ -92,4 +130,14 @@ void Room::SetContents(Object* items)
 	for (int i = 0; i < MAX_ITEM_COUNT; i++) {
 		AppendItem(items[i]);
 	}
+}
+
+void Room::SetName(const char* name)
+{
+	roomName = name;
+}
+
+void Room::SetDesc(const char* desc)
+{
+	roomDesc = desc;
 }
