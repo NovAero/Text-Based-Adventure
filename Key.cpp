@@ -1,13 +1,14 @@
 #include "Key.h"
 
-Key::Key(char colour, const char* name, const char* description, bool invisible) : Object(name, description, itemID, invisible)
+Key::Key(const char* name, const char* description, bool invisible, int KEY_ID) : Object(name, description, KEY_ID, invisible)
 {
 
 	name = Object::Name();
 	desc = Object::Description();
 
 	this->invisible = invisible;
-	keyColour = colour;
+
+	itemID = KEY_ID;
 
 }
 
@@ -23,4 +24,9 @@ const char* Key::Name()
 const char* Key::Description()
 {
 	return desc.GetData();
+}
+
+bool Key::CanPickup()
+{
+	return canPickup;
 }

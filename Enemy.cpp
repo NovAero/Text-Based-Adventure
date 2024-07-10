@@ -17,3 +17,8 @@ Enemy::Enemy(const char* name, const char* description)
 Enemy::~Enemy()
 {
 }
+
+bool Enemy::CanPickup()
+{
+	return canPickup;
+}

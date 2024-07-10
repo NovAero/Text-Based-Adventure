@@ -1,4 +1,5 @@
 #pragma once
+#include <fstream>
 #include "String.h"
 #include "Player.h"
 #include "Spell.h"

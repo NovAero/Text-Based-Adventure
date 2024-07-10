@@ -14,11 +14,13 @@ public:
 	const char* Description() override;
 
 	const char* Interact(bool SwAisActive, int numOfHidden);
+	bool CanPickup() override;
 
 	void Pet();
 
 private:
 
+	bool canPickup = false;
 	bool purring = false;
 	bool invisible = false;
 

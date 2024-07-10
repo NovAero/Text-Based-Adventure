@@ -14,14 +14,17 @@ public:
 
 public:
 
-	const char* Name();
-	String& NameObj();
-	const char* Description();
+	const char* Name() override;
+	String& NameObj() override;
+	const char* Description() override;
+	bool CanPickup() override;
 
 private:
 
 	String doorName;
 	String doorDesc;
+
+	bool canPickup = false;
 
 	int dirID = -1;
 

@@ -6,9 +6,9 @@ Room::Room()
 	posY = 0;
 }
 
-Room::Room(Object* items, const char* name, const char* description, int x, int y)
+Room::Room(Object* items, const char* name, int x, int y)
 {
-	SetAllData(items, name, description, x, y);
+	SetAllData(items, name, x, y);
 }
 
 Room::~Room()
@@ -17,10 +17,9 @@ Room::~Room()
 }
 
 
-void Room::SetAllData(Object* contents, const char* name, const char* desc, int x, int y)
+void Room::SetAllData(Object* contents, const char* name, int x, int y)
 {
 	SetName(name);
-	SetDesc(desc);
 	SetContents(contents);
 	SetCoords(x, y);
 }

@@ -55,8 +55,13 @@ void Player::DisplayInventory()
 {
 	int s = 1;
 	for (Object i: inventory) {
-		cout << "Slot " << s << " " << i.Name() << " Description " << i.Description() <<  endl;
-		++s;
+		if (i.GetID() != -1) {
+			cout << "Slot " << s << " " << i.Name() << " Description " << i.Description() <<  endl;
+		}
+		else {
+			cout << "Slot " << s << "Empty" << endl;
+		}
+		s++;
 	}
 }
 
@@ -76,23 +81,24 @@ void Player::AddToInventory(Object& toAdd)
 	int s = 1;
 	for (Object& i: inventory) {
 
-		if (i.NameObj() == "N/A") {
+		if (i.NameObj() == "N/A" && toAdd.CanPickup() == true) {
 			if (InvHasCopy(toAdd) == false) {
 				i.CopyData(toAdd);
 				cout << "Added " << toAdd.Name() << " to inventory slot " << s << endl;
 				return;
 			}
-			else {
-				cout << "Your cannot carry any more of that item!" << endl;
+			else if(InvHasCopy(toAdd) == true){
+				cout << "You cannot carry any more of that item!" << endl;
 				return;
+			}
+			else {
+				cout << "You cannot pick that up" << endl;
 			}
 			s++;
 		}
 
 	}
-
 	cout << "Inventory is full!" << endl;
-
 }
 bool Player::InvHasCopy(Object& obj)
 {

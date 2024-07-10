@@ -72,6 +72,11 @@ int Object::GetID()
 	return this->itemID;
 }
 
+bool Object::CanPickup()
+{
+	return canPickup;
+}
+
 const char* Object::Name()
 {
 	return name.GetData();

@@ -1,6 +1,6 @@
 #include "Door.h"
 
-Door::Door(int directionID) : Object("Exit Gate", "", directionID, false);
+Door::Door(int directionID) : Object("Exit Gate","", directionID, false)
 {
 	doorName = Object::Name();
 	doorDesc = Object::Description();
@@ -27,7 +27,17 @@ const char* Door::Name()
 	return doorName.GetData();
 }
 
+String& Door::NameObj()
+{
+	return doorName;
+}
+
 const char* Door::Description()
 {
 	return doorDesc.GetData();
+}
+
+bool Door::CanPickup()
+{
+	return canPickup;
 }

@@ -27,6 +27,11 @@ const char* Scroll::Description()
 	return this->desc.GetData();
 }
 
+bool Scroll::CanPickup()
+{
+	return canPickup;
+}
+
 void Scroll::Use(Player& player)
 {
 	player.GiveSpellAccess(spell.GetID());

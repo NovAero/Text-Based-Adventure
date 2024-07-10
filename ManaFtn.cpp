@@ -28,6 +28,11 @@ const char* ManaFtn::Description()
 	return desc.GetData();
 }
 
+bool ManaFtn::CanPickup()
+{
+	return canPickup;
+}
+
 void ManaFtn::Use(Player& plr)
 {
 	if (plr.GetMana() < 15 && uses > 0 ) {

@@ -9,12 +9,12 @@ class Room
 public:
 
 	Room();
-	Room(Object* items, const char* name, const char* description, int x, int y);
+	Room(Object* items, const char* name, int x, int y);
 	~Room();
 
 public:
 
-	void SetAllData(Object* contents, const char* name, const char* desc, int x, int y);
+	void SetAllData(Object* contents, const char* name, int x, int y);
 
 	void SetCoords(int x, int y);
 	int GetX();

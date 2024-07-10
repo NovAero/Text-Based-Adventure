@@ -14,10 +14,13 @@ public:
 	const char* Name() override;
 	const char* Description() override;
 
+	bool CanPickup() override;
+
 	void Use(Player& plr);
 
 private:
 
+	bool canPickup = false;
 	bool invisible = false;
 
 	String name;

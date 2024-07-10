@@ -14,15 +14,19 @@ public:
 
 	void Hurt(int damage);
 
-private:
+	bool CanPickup() override;
 
-	bool invisible = false;
+private:
 
 	String name;
 	String desc;
 
+	bool canPickup = false;
+	bool invisible = false;
+
 	int health = 15;
 	const int maxHealth = 15;
+
 
 	int dmgClamp[2] = { 1,6 };
 

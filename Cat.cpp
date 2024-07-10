@@ -41,6 +41,11 @@ const char* Cat::Interact(bool SwAisActive, int numOfHidden)
 	return converse.GetData();
 }
 
+bool Cat::CanPickup()
+{
+	return canPickup;
+}
+
 void Cat::Pet()
 {
 	cout << "You pet the cat." << endl;
