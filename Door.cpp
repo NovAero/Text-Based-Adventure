@@ -22,6 +22,11 @@ Door::~Door()
 }
 
 
+int Door::GetID()
+{
+	return dirID;
+}
+
 const char* Door::Name()
 {
 	return doorName.GetData();

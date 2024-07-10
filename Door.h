@@ -14,6 +14,7 @@ public:
 
 public:
 
+	int GetID() override;
 	const char* Name() override;
 	String& NameObj() override;
 	const char* Description() override;
