@@ -21,9 +21,9 @@ public:
 
 public:
 
-	void RunGame(int roomX, int roomY);
-	void LoadRoom(Room& toLoad);
-	void LoadRoom(int x, int y);
+	void RunGame(int roomX, int roomY, bool isNewRoom);
+	void LoadRoom(Room& toLoad, bool isNewRoom);
+	void LoadRoom(int x, int y, bool isNewRoom);
 
 	void GenerateRooms(Object* room00, Object* room01, Object* room02, Object* room10, Object* room11, Object* room12, Object* room20, Object* room21, Object* room22);
 

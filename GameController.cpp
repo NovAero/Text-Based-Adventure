@@ -11,9 +11,9 @@ GameController::~GameController()
 {
 }
 
-void GameController::RunGame(int roomX, int roomY)
+void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 {
-	LoadRoom(roomX, roomY);
+	LoadRoom(roomX, roomY, isNewRoom);
 	int pos[2] = { roomX, roomY };
 
 	command.Input();
@@ -48,15 +48,21 @@ void GameController::RunGame(int roomX, int roomY)
 	}
 }
 
-void GameController::LoadRoom(Room& toLoad)
+void GameController::LoadRoom(Room& toLoad, bool isNewRoom)
 {
-	cout << "Entering " << toLoad.Name() << "\n\n";
-	toLoad.Description(toLoad.GetX(), toLoad.GetY());
+	if (isNewRoom == true) {
+		cout << "Entering " << toLoad.Name() << "\n\n";
+		toLoad.Description(toLoad.GetX(), toLoad.GetY());
+
+	}
+	else {
+		cout << "You are in the " << toLoad.Name() << "\n\n";
+	}
 }
 
-void GameController::LoadRoom(int x, int y)
+void GameController::LoadRoom(int x, int y, bool isNewRoom)
 {
-	LoadRoom(rooms[x][y]);
+	LoadRoom(rooms[x][y], isNewRoom);
 }
 
 void GameController::GenerateRooms(Object* room00, Object* room01, Object* room02, Object* room10, Object* room11, Object* room12, Object* room20, Object* room21, Object* room22)
@@ -79,7 +85,7 @@ void GameController::MHandlerNorth(int X, int Y)
 	try {
 		if (rooms[X][Y].HasItemID(DOOR_ID_N) && X > 0) {
 			X--;
-			RunGame(X, Y);
+			RunGame(X, Y, true);
 		}
 		else {
 			throw(rooms[X][Y].Name());
@@ -98,7 +104,7 @@ void GameController::MHandlerNorth(int X, int Y)
 		else { //Boat Shed, Library, Cathedral, Ossuary
 			cout << name << " doesn't have a back door, you can't walk through walls." << endl;
 		}
-		RunGame(X, Y);
+		RunGame(X, Y, false);
 	}
 }
 
@@ -115,14 +121,14 @@ void GameController::MHandlerEast(int X, int Y,bool hasCemKey, bool levActive)
 		else if (rooms[X][Y].HasItemID(DOOR_ID_E) && Y < 2) { //has door to east
 			if (rooms[X][Y + 1].Name() == rooms[0][2].Name() && hasCemKey == true) { //Has key to cemetery and is in cathedral
 				Y++;
-				RunGame(X, Y);
+				RunGame(X, Y, true);
 			}
 			else if(rooms[X][Y + 1].Name() == rooms[0][2].Name() && hasCemKey == false) {//Doesnt have key, is in cathedral
 				throw(rooms[X][Y].Name());
 			}
 			else { //isnt in cathedral
 				Y++;
-				RunGame(X, Y);
+				RunGame(X, Y, true);
 			}
 		}
 		else { //no room to right
@@ -142,7 +148,7 @@ void GameController::MHandlerEast(int X, int Y,bool hasCemKey, bool levActive)
 		else if(name == rooms[0][2].Name()){ //Cemetery
 			cout << "A wide chasm block your path, you definitely can't make that jump." << endl;
 		}
-		RunGame(X, Y);
+		RunGame(X, Y, false);
 	}
 }
 
@@ -202,11 +208,11 @@ void GameController::EndGameHandler()
 	}
 	else if (command.Find("no") != -1) {
 		cout << "You may continue to explore, but this is your final resting place\n";
-		RunGame(0, 2);
+		RunGame(0, 2, false);
 	}
 	else {
 		cout << "Your answer is uncertain, come back when you are ready to rest\n";
-		RunGame(0, 2);
+		RunGame(0, 2, false);
 	};
 }
 
