@@ -27,3 +27,8 @@ const char* Scroll::Description()
 	return this->desc.GetData();
 }
 
+void Scroll::Interact()
+{
+	cout << Name() << ", " << Description() << endl;
+}
+

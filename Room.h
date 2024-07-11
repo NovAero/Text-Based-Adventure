@@ -21,6 +21,7 @@ public:
 	int GetY();
 
 	void ShowContents(bool fStoneActive);
+	int AnyHiddenItems();
 
 	int HasItemID(int ID);
 	int HasItem(String& item);

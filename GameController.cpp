@@ -53,7 +53,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 		}
 	} 
 	else if ((commandIndex = command.Find("use")) == 0 && command.len() > 3) {
-
+		system("CLS");
 		String temp = new char[command.len() - 3];
 		int j = 0;
 
@@ -74,7 +74,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 
 	} 
 	else if ((commandIndex = command.Find("pickup") == 0 && command.len() > 6)) {
-
+		system("CLS");
 		int j = 0;
 		String temp = new char[(command.len() - 6) + 1];
 
@@ -90,7 +90,6 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 
 		if (commandIndex != -1) {
 			AddToInventory(rooms[pos[0]][pos[1]].GetItemAtIndex(commandIndex));
-			DisplayInventory();
 
 			KeyChecker(rooms[pos[0]][pos[1]].GetItemAtIndex(commandIndex));
 
@@ -100,12 +99,73 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 
 	}
 	else if ((commandIndex = command.Find("inspect room") == 0)) {
-
+		system("CLS");
 		rooms[pos[0]][pos[1]].ShowContents(fStoneActive);
+
+		cout << endl;
 
 		RunGame(pos[0], pos[1], false);
 
+	}
+	else if ((commandIndex = command.Find("show inv") == 0)) {
+		system("CLS");
+
+		DisplayInventory();
+		RunGame(pos[0], pos[1], false);
 	} 
+	else if(commandIndex = command.Find("show spell") == 0){
+		system("CLS");
+		DisplaySpellbook();
+		cout << endl;
+
+		RunGame(pos[0], pos[1], false);
+	}
+	else if (commandIndex = command.Find("help") == 0) {
+		system("CLS");
+		cout << "Commands:\n-move [n/s/e/w]\n-pickup [item]\n-use [item in inventory]\n-inspect room\n-show [inv/spell]\n-cast [spell]\n-interact [target name]\n";
+		RunGame(pos[0], pos[1], false);
+	}
+	else if (commandIndex = command.Find("cast") == 0 && command.len() > 4) {
+
+		system("CLS");
+		String temp = new char[command.len() - 4];
+		int j = 0;
+
+		for (int i = 4; i < command.len(); ++i) {
+			temp[j] = command[i];
+			++j;
+		}
+		if (temp[command.len() - 4] != '\0') {
+			temp[command.len() - 4] = '\0';
+		}
+		command = temp;
+		bool hasSpell = FindSpell(command);
+
+		if (hasSpell == true) {
+			Cast(command);
+			cout << endl;
+		}
+		RunGame(pos[0], pos[1], false);
+	}
+	else if (commandIndex = command.Find("interact") == 0 && command.len() > 9 ) {
+		system("CLS");
+		String temp = new char[command.len() - 9];
+		int j = 0;
+
+		for (int i = 9; i < command.len(); ++i) {
+			temp[j] = command[i];
+			++j;
+		}
+		if (temp[command.len() - 9] != '\0') {
+			temp[command.len() - 9] = '\0';
+		}
+
+		command = temp;
+
+		Interact(command, rooms[pos[0]][pos[1]]);
+
+		RunGame(pos[0], pos[1], false);
+	}
 	else {
 		system("CLS");
 		cout << "Not a valid action." << endl;
@@ -390,40 +450,74 @@ void GameController::KeyChecker(Object& obj)
 
 void GameController::Use(int itemID)
 {
+	String useText = "You read the Scroll of ";
+	String flavour = ", filling you with newfound knowledge! \n\n";
+
 	switch (itemID) {
 	case SCROLL_ID_DM:
 		GiveSpellAccess(SCROLL_ID_DM - 11);
+		cout << useText.GetData() << spellbook[0].NameData() << flavour.GetData();
 		break;
 	case SCROLL_ID_L:
 		GiveSpellAccess(SCROLL_ID_L - 11);
+		cout << useText.GetData() << spellbook[1].NameData() << flavour.GetData();
 		break;
 	case SCROLL_ID_FB:
 		GiveSpellAccess(SCROLL_ID_FB - 11);
+		cout << useText.GetData() << spellbook[2].NameData() << flavour.GetData();
 		break;
 	case SCROLL_ID_FD:
 		GiveSpellAccess(SCROLL_ID_FD - 11);
+		cout << useText.GetData() << spellbook[3].NameData() << flavour.GetData();
 		break;
 	case SCROLL_ID_FS:
 		GiveSpellAccess(SCROLL_ID_FS - 11);
+		cout << useText.GetData() << spellbook[4].NameData() << flavour.GetData();
 		break;
 	case SCROLL_ID_SWA:
 		GiveSpellAccess(SCROLL_ID_SWA - 11);
+		cout << useText.GetData() << spellbook[5].NameData() << flavour.GetData();
 		break;
 	case SCROLL_ID_J:
 		GiveSpellAccess(SCROLL_ID_J - 11);
+		cout << useText.GetData() << spellbook[6].NameData() << flavour.GetData();
 		break;
 	case SCROLL_ID_LO:
 		GiveSpellAccess(SCROLL_ID_LO - 11);
+		cout << useText.GetData() << spellbook[7].NameData() << flavour.GetData();
 		break;
 	case SCROLL_ID_MM:
 		GiveSpellAccess(SCROLL_ID_MM - 11);
+		cout << useText.GetData() << spellbook[8].NameData() << flavour.GetData();
 		break;
 	case SCROLL_ID_H:
 		GiveSpellAccess(SCROLL_ID_H - 11);
+		cout << useText.GetData() << spellbook[9].NameData() << flavour.GetData();
 		break;
 	default:
-		cout << "You can't use that item." << endl << endl;
+		cout << "You can't use that item." << endl;
 	}
+}
+
+void GameController::Interact(String& name, Room& currentRoom)
+{
+	if (name == "cat" && currentRoom.GetItemAtIndex(0).GetID() == CAT_ID) {
+		Cat cat;
+		cat.Interact(SwAActive, currentRoom.AnyHiddenItems());
+	}
+	int itemIndex = currentRoom.HasItem(name);
+
+	if (itemIndex != -1) {
+	
+		Object& toInteract = currentRoom.GetItemAtIndex(itemIndex);
+		itemIndex = toInteract.GetID();
+
+		toInteract.Interact();
+	}
+	else {
+		cout << "You talk to yourself, weirdo..." << endl;
+	}
+
 }
 
 void GameController::Cast(int spellID)
@@ -481,6 +575,10 @@ void GameController::DisplaySpellbook()
 	for (Spell s : spellbook) {
 		if (FindSpell(s.GetID()) == true) {
 			cout << "Spell " << k << " " << s.NameData() << endl;
+			k++;
+		}
+		else {
+			cout << "Spell " << k << ": You don't know this spell yet" << endl;
 			k++;
 		}
 	}

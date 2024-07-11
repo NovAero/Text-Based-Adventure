@@ -24,20 +24,20 @@ Door::~Door()
 
 int Door::GetID()
 {
-	return dirID;
+	return this->dirID;
 }
 
 const char* Door::Name()
 {
-	return doorName.GetData();
+	return this->doorName.GetData();
 }
 
 String& Door::NameObj()
 {
-	return doorName;
+	return this->doorName;
 }
 
 const char* Door::Description()
 {
-	return doorDesc.GetData();
+	return this->doorDesc.GetData();
 }

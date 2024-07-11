@@ -194,9 +194,12 @@ void Spell::SetDataName(String& find)
 	//Checks if there are any space or apostrophe chars, removes them
 	find.ToLower();
 	for (int i = 0; i < find.len(); ++i) {
-		if (find[i] == ' ' || find[i] == '\'') {
+		if (find[i] == ' ') {
 			find.Replace(' ', "", true);
-			find.Replace('\'', "", true);
+			if (find[i] == '\'') {
+				find.Replace('\'', "", true);
+				break;
+			}
 			break;
 		}
 	}

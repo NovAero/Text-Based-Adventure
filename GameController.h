@@ -1,5 +1,4 @@
 #pragma once
-#include <fstream>
 #include "String.h"
 #include "Spell.h"
 #include "Room.h"
@@ -47,6 +46,7 @@ public:
 	void Attack();
 
 	void Use(int itemID);
+	void Interact(String& name, Room& currentRoom);
 
 	void Cast(int spellID);
 	void Cast(String& spellName);

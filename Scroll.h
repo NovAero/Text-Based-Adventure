@@ -26,6 +26,7 @@ public:
     int GetID() override;
     const char* Name() override;
     const char* Description() override;
+    void Interact() override;
 
 private:
 

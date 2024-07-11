@@ -19,11 +19,11 @@
 	Key rustedKey("Rusted Key", "A rusty key with a handle shaped like a boat", false, RUSTED_KEY_ID);
 	Key cemeteryKey("Cemetery Key", "A glittering silver key", true, CEMETERY_KEY_ID);
 
-	Object room00[MAX_ITEM_COUNT] = { exitGates[1], scrolls[2], cats[0]};
+	Object room00[MAX_ITEM_COUNT] = { cats[0], exitGates[1], scrolls[2]};
 	Object room01[MAX_ITEM_COUNT] = { exitGates[2], ossuaryDoor, cemetaryDoor, fountain, cemeteryKey, scrolls[7]};
 	Object room02[MAX_ITEM_COUNT] = { exitGates[3], tombstone, scrolls[3] };
 	Object room10[MAX_ITEM_COUNT] = { exitGates[1], scrolls[5] };
-	Object room11[MAX_ITEM_COUNT] = { exitGates[0], exitGates[1], exitGates[2], exitGates[3] };
+	Object room11[MAX_ITEM_COUNT] = { cats[1], exitGates[0], exitGates[1], exitGates[2], exitGates[3]};
 	Object room12[MAX_ITEM_COUNT] = { exitGates[3], scrolls[0], scrolls[6] };
 	Object room20[MAX_ITEM_COUNT] = { exitGates[1], scrolls[9] };
 	Object room21[MAX_ITEM_COUNT] = { boatDoor, exitGates[0], exitGates[1]};
@@ -41,3 +41,6 @@ int main() {
 	
 	ctrl.RunGame(1,2, true);
 }
+
+
+//TODO Add faerie, key object "magic flower", enemy types, combat module

@@ -48,7 +48,7 @@ void Room::ShowContents(bool fStoneActive)
 
 	for (Object v : itemsInRoom) {
 
-		if (v.GetID() == -1 || v.Name() == "Exit Gate") {
+		if (v.GetID() == -1 || v.NameObj() == "Exit Gate") {
 			continue;
 		}
 		if (v.isInvisible() == true && fStoneActive == true) {
@@ -69,17 +69,35 @@ void Room::ShowContents(bool fStoneActive)
 	}
 	int len = contents.len();
 	int lastWord = FindFirstEmpty() - 1;
-	int lastWordLen = itemsInRoom[lastWord].NameObj().len();
 
-	find.Prefix("a ");
-	replace = find.GetData();
-	replace.Prefix("and ");
-	replace.Suffix(".");
+	if (lastWord == 1) {
+		contents.Replace(",", ".");
+		cout << contents.GetData();
+	}
+	else {
 
-	contents.Replace(find, replace);
-	contents.Replace(".,", ".");
+		find.Prefix("a ");
+		replace = find.GetData();
+		replace.Prefix("and ");
+		replace.Suffix(".");
 
-	cout << contents.GetData();
+		contents.Replace(find, replace);
+		contents.Replace(".,", ".");
+
+		cout << contents.GetData();
+	}
+}
+
+int Room::AnyHiddenItems()
+{
+	int i = 0;
+	for(Object h : itemsInRoom) {
+		if (h.GetID() != -1 && h.isInvisible() == true) {
+			return i;
+		}
+		++i;
+	}
+	return -1;
 }
 
 int Room::HasItemID(int ID)
@@ -266,7 +284,6 @@ void Room::RemoveItem(Object& obj)
 
 		if (i.GetID() == obj.GetID()) {
 			i.SetData("N/A", "Empty", -1, false);
-			cout << "Removed " << obj.Name() << " from room " << endl;
 			return;
 		}
 

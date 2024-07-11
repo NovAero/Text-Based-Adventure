@@ -94,6 +94,11 @@ const char* Object::Description()
 	return desc.GetData();
 }
 
+void Object::Interact()
+{
+	cout << Name() << ", " << Description() << endl;
+}
+
 bool Object::isInvisible()
 {
 	return invisible;
