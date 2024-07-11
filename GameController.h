@@ -36,7 +36,12 @@ public:
 
 	void EndGameHandler();
 	
+public:
+
 	bool dispelMagUsed = false;
+
+	bool levActive = false;
+	bool SwAActive = false;
 
 private:
 

@@ -32,7 +32,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 
 		case 'e':
 
-			MHandlerEast(pos[0], pos[1], player.InvHas(CEMETERY_KEY_ID), player.levActive);
+			MHandlerEast(pos[0], pos[1], player.InvHas(CEMETERY_KEY_ID), levActive);
 			break;
 
 		case's':
@@ -56,6 +56,9 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 		RunGame(pos[0], pos[1], false);
 	}
 
+	if (command.Find("use") != -1) {
+
+	}
 }
 
 void GameController::LoadRoom(Room& toLoad, bool isNewRoom)
@@ -122,7 +125,6 @@ void GameController::MHandlerNorth(int X, int Y)
 		RunGame(X, Y, false);
 	}
 }
-
 void GameController::MHandlerEast(int X, int Y,bool hasCemKey, bool levActive)
 {
 	try {
@@ -172,7 +174,6 @@ void GameController::MHandlerEast(int X, int Y,bool hasCemKey, bool levActive)
 		RunGame(X, Y, false);
 	}
 }
-
 void GameController::MHandlerSouth(int X, int Y)
 {
 	try {
@@ -205,7 +206,6 @@ void GameController::MHandlerSouth(int X, int Y)
 		RunGame(X, Y, false);
 	}
 }
-
 void GameController::MHandlerWest(int X, int Y, bool hasBoatKey, bool dispelMagUsed)
 {
 	try {

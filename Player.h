@@ -44,8 +44,6 @@ public:
 
 	String name;
 
-	bool levActive = false;
-	bool SwAActive = false;
 
 private:
 
