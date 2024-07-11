@@ -32,7 +32,7 @@ public:
 	void MHandlerNorth(int X, int Y);
 	void MHandlerEast(int X, int Y, bool hasCemKey, bool levActive);
 	void MHandlerSouth(int X, int Y);
-	void MHandlerWest(int X, int Y);
+	void MHandlerWest(int X, int Y, bool hasBoatKey, bool dispelMagUsed);
 
 	void EndGameHandler();
 

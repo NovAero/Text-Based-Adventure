@@ -37,6 +37,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 
 		case's':
 
+			MHandlerSouth(pos[0], pos[1]);
 			break;
 		case'w':
 
@@ -56,7 +57,7 @@ void GameController::LoadRoom(Room& toLoad, bool isNewRoom)
 
 	}
 	else {
-		cout << "You are in the " << toLoad.Name() << "\n\n";
+		cout << endl << "You are at the " << toLoad.Name() << "\n\n";
 	}
 }
 
@@ -85,6 +86,7 @@ void GameController::MHandlerNorth(int X, int Y)
 	try {
 		if (rooms[X][Y].HasItemID(DOOR_ID_N) && X > 0) {
 			X--;
+			system("CLS");
 			RunGame(X, Y, true);
 		}
 		else {
@@ -93,17 +95,22 @@ void GameController::MHandlerNorth(int X, int Y)
 	}
 	catch (const char* name) {
 		if (name == rooms[2][2].Name()) { //Rock pools
-			cout << "Trying to move north, you are met with a sheer cliff that is too steep to climb." << endl;
+			system("CLS");
+			cout << "You are met with a sheer cliff that is too steep to climb." << endl;
 		}
 		else if (name == rooms[1][0].Name()) { //Forest
+			system("CLS");
 			cout << "The forest is too thick in that direction." << endl;
 		}
 		else if (name == rooms[0][2].Name()) { //Cemetery
+			system("CLS");
 			cout << "The cemetery fences are to tall to climb." << endl;
 		}
 		else { //Boat Shed, Library, Cathedral, Ossuary
+			system("CLS");
 			cout << name << " doesn't have a back door, you can't walk through walls." << endl;
 		}
+		system("CLS");
 		RunGame(X, Y, false);
 	}
 }
@@ -120,6 +127,7 @@ void GameController::MHandlerEast(int X, int Y,bool hasCemKey, bool levActive)
 		}
 		else if (rooms[X][Y].HasItemID(DOOR_ID_E) && Y < 2) { //has door to east
 			if (rooms[X][Y + 1].Name() == rooms[0][2].Name() && hasCemKey == true) { //Has key to cemetery and is in cathedral
+				system("CLS");
 				Y++;
 				RunGame(X, Y, true);
 			}
@@ -127,6 +135,7 @@ void GameController::MHandlerEast(int X, int Y,bool hasCemKey, bool levActive)
 				throw(rooms[X][Y].Name());
 			}
 			else { //isnt in cathedral
+				system("CLS");
 				Y++;
 				RunGame(X, Y, true);
 			}
@@ -137,15 +146,101 @@ void GameController::MHandlerEast(int X, int Y,bool hasCemKey, bool levActive)
 	}
 	catch (const char* name) {
 		if (name == rooms[2][2].Name()) { //Rock pools
-			cout << "Trying to move east, you are met with a sheer cliff that is too steep to climb." << endl;
+			system("CLS");
+			cout << "You are met with a sheer cliff that is too steep to climb." << endl;
 		}
 		else if (name == rooms[1][2].Name()) { //Library
+			system("CLS");
 			cout << name << " doesn't have a back door, you can't walk through walls." << endl;
 		}
 		else if (name == rooms[0][1].Name()) { //Cathedral
+			system("CLS");
 			cout << "You try to open the cemetery door, but it's locked." << endl;
 		}
 		else if(name == rooms[0][2].Name()){ //Cemetery
+			system("CLS");
+			cout << "A wide chasm block your path, you definitely can't make that jump." << endl;
+		}
+		RunGame(X, Y, false);
+	}
+}
+
+void GameController::MHandlerSouth(int X, int Y)
+{
+	try {
+		if (rooms[X][Y].HasItemID(DOOR_ID_N) && X < 2) {
+			X++;
+			RunGame(X, Y, true);
+		}
+		else {
+			throw(rooms[X][Y].Name());
+		}
+	}
+	catch (const char* name) {
+		if (name == rooms[2][2].Name() || name == rooms[2][1].Name() || name == rooms[2][0].Name()) { //Rock pools
+			system("CLS");
+			cout << "You see only ocean until the horizon, it might be a good idea to go another way." << endl;
+		}
+		else if (name == rooms[1][0].Name()) { //Forest
+			system("CLS");
+			cout << "The forest is too thick in that direction." << endl;
+		}
+		else if (name == rooms[0][2].Name()) { //Cemetery
+			system("CLS");
+			cout << "The cemetery fences are to tall to climb." << endl;
+		}
+		else {// Library, Cathedral, Ossuary
+			system("CLS");
+			cout << name << " doesn't have a back door, you can't walk through walls." << endl;
+		}
+		RunGame(X, Y, false);
+	}
+}
+
+void GameController::MHandlerWest(int X, int Y, bool hasBoatKey, bool dispelMagUsed)
+{
+	try {
+		if (rooms[X][Y].Name() == rooms[0][2].Name() && levActive == true) { //player is levitating and at 0,2
+			EndGameHandler();
+			system("pause");
+		}
+		else if (rooms[X][Y].Name() == rooms[0][2].Name() && levActive == false) { //player not leveitating at 0,2
+			throw(rooms[X][Y].Name());
+		}
+		else if (rooms[X][Y].HasItemID(DOOR_ID_E) && Y < 2) { //has door to east
+			if (rooms[X][Y + 1].Name() == rooms[0][2].Name() && hasCemKey == true) { //Has key to cemetery and is in cathedral
+				system("CLS");
+				Y++;
+				RunGame(X, Y, true);
+			}
+			else if (rooms[X][Y + 1].Name() == rooms[0][2].Name() && hasCemKey == false) {//Doesnt have key, is in cathedral
+				throw(rooms[X][Y].Name());
+			}
+			else { //isnt in cathedral
+				system("CLS");
+				Y++;
+				RunGame(X, Y, true);
+			}
+		}
+		else { //no room to right
+			throw(rooms[X][Y].Name());
+		}
+	}
+	catch (const char* name) {
+		if (name == rooms[2][2].Name()) { //Rock pools
+			system("CLS");
+			cout << "You are met with a sheer cliff that is too steep to climb." << endl;
+		}
+		else if (name == rooms[1][2].Name()) { //Library
+			system("CLS");
+			cout << name << " doesn't have a back door, you can't walk through walls." << endl;
+		}
+		else if (name == rooms[0][1].Name()) { //Cathedral
+			system("CLS");
+			cout << "You try to open the cemetery door, but it's locked." << endl;
+		}
+		else if (name == rooms[0][2].Name()) { //Cemetery
+			system("CLS");
 			cout << "A wide chasm block your path, you definitely can't make that jump." << endl;
 		}
 		RunGame(X, Y, false);
