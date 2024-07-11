@@ -20,7 +20,7 @@ public:
 
 public:
 
-	void RunGame();
+	void RunGame(int roomX, int roomY);
 	void LoadRoom(Room& toLoad);
 	void LoadRoom(int x, int y);
 

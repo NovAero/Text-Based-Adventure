@@ -9,10 +9,10 @@ GameController::~GameController()
 {
 }
 
-void GameController::RunGame()
+void GameController::RunGame(int roomX, int roomY)
 {
-	LoadRoom(1, 1);
-	int pos[2] = { 1, 1 };
+	LoadRoom(roomX, roomY);
+	int pos[2] = { roomX, roomY };
 
 	command.Input();
 	command.ToLower();
@@ -27,7 +27,7 @@ void GameController::RunGame()
 			try {
 				if (rooms[pos[0]][pos[1]].HasItemID(DOOR_ID_N) && pos[0] > 0) {
 					pos[0]--;
-					LoadRoom(pos[0], pos[1]);
+					RunGame(pos[0], pos[1]);
 				}
 				else {
 					throw(rooms[pos[0]][pos[1]].Name());
@@ -46,6 +46,7 @@ void GameController::RunGame()
 				else {
 					cout << name << " doesn't have a back door, you can't walk through walls." << endl;
 				}
+				RunGame(pos[0], pos[1]);
 			}
 			break;
 
@@ -73,7 +74,6 @@ void GameController::RunGame()
 			break;
 		}
 	}
-
 }
 
 void GameController::LoadRoom(Room& toLoad)
