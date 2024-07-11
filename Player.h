@@ -16,6 +16,8 @@ public:
 
 	void Attack();
 
+	void Use(int itemID);
+
 	void Cast(int spellID);
 	void Cast(String& spellName);
 	void Cast(const char* spellName);
@@ -25,7 +27,9 @@ public:
 
 	void AddToInventory(Object& toAdd);
 	bool InvHasCopy(Object& obj);
-	bool InvHas(int ID);
+
+	int InvHas(int ID);
+	int InvHas(String& itemName);
 
 	bool FindSpell(int spellID);
 	bool FindSpell(String& find);

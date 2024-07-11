@@ -19,6 +19,8 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 	command.Input();
 	command.ToLower();
 
+	int commandIndex = 0;
+
 	if (command.Find("move") != -1) {
 
 		char direction = command.CharAt(5);
@@ -26,7 +28,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 		switch (direction) {
 
 		case 'n':
-			
+
 			MHandlerNorth(pos[0], pos[1]);
 			break;
 
@@ -56,8 +58,30 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 		RunGame(pos[0], pos[1], false);
 	}
 
-	if (command.Find("use") != -1) {
+	if ((commandIndex = command.Find("use")) != -1) {
 
+		String temp = new char[command.len() - commandIndex + 1];
+		int j = 0;
+
+		for (int i = (commandIndex + 3); i < command.len(); ++i) {
+			temp[j] = command[i];
+			++j;
+		}
+		if (temp[command.len() - commandIndex] != '\0') {
+			temp[command.len() - commandIndex] = '\0';
+		}
+		command = temp;
+		commandIndex = player.InvHas(command);
+
+		if (commandIndex != -1) {
+			player.Use(commandIndex);
+		}
+
+	}
+	else {
+		system("CLS");
+		cout << "Not a valid action." << endl;
+		RunGame(pos[0], pos[1], false);
 	}
 }
 

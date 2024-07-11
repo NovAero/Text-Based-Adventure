@@ -21,6 +21,17 @@ Player::~Player()
 {
 }
 
+void Player::Use(int itemID)
+{
+	int index = InvHas(itemID);
+	if (index == -1){
+		return;
+	}
+	else {
+		inventory[index].Use();
+	}
+}
+
 void Player::Cast(int spellID)
 {
 	if (FindSpell(spellID) == true) {
@@ -116,15 +127,27 @@ bool Player::InvHasCopy(Object& obj)
 	return false;
 }
 
-bool Player::InvHas(int ID)
+int Player::InvHas(int ID)
+{
+	int i = 0;
+	for (Object& o : inventory) {
+		if (o.GetID() == ID) {
+			return i;
+		}
+		++i;
+	}
+	return -1;
+}
+
+int Player::InvHas(String& itemName)
 {
 	for (Object& o : inventory) {
-
-		if (o.GetID() == ID) {
-			return true;
+	
+		if (o.NameObj().ToLower() == itemName.ToLower()) {
+			return o.GetID();
 		}
 	}
-	return false;
+	return -1;
 }
 
 bool Player::FindSpell(int spellID)
