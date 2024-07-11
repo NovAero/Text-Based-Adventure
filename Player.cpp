@@ -1,15 +1,20 @@
 #include "Player.h"
 
-Player::Player(const char* name, int luck)
+Player::Player()
 {
-	this->name = name;
-	this->luck = luck;
+	name = "Empty Player";
 }
 
-Player::Player(String& name, int luck)
+Player::Player(const char* name)
 {
 	this->name = name;
-	this->luck = luck;
+	
+}
+
+Player::Player(String& name)
+{
+	this->name = name;
+	
 }
 
 Player::~Player()
@@ -111,6 +116,17 @@ bool Player::InvHasCopy(Object& obj)
 	return false;
 }
 
+bool Player::InvHas(int ID)
+{
+	for (Object& o : inventory) {
+
+		if (o.GetID() == ID) {
+			return true;
+		}
+	}
+	return false;
+}
+
 bool Player::FindSpell(int spellID)
 { //Binary search for spellID in player's spellbook, more effective at larger sizes
 	int l = 0;
@@ -174,4 +190,9 @@ void Player::SetMana(int mana)
 	if (this->mana >= maxMana) {
 		this->mana = maxMana;
 	}
+}
+
+void Player::SetData(Player& copy)
+{
+	this->name = copy.name;
 }

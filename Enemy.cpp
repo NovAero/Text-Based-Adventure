@@ -5,7 +5,6 @@ Enemy::Enemy() : Object("Goblin", "A small green creature, weilding a knife", EN
 	name = Object::Name();
 	desc = Object::Description();
 
-
 }
 
 Enemy::Enemy(const char* name, const char* description)

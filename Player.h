@@ -6,8 +6,9 @@ class Player
 {
 public:
 
-	Player(const char* name, int luck);
-	Player(String& name, int luck);
+	Player();
+	Player(const char* name);
+	Player(String& name);
 	 
 	~Player();
 
@@ -24,6 +25,7 @@ public:
 
 	void AddToInventory(Object& toAdd);
 	bool InvHasCopy(Object& obj);
+	bool InvHas(int ID);
 
 	bool FindSpell(int spellID);
 	bool FindSpell(String& find);
@@ -36,18 +38,25 @@ public:
 	int GetMana();
 	void SetMana(int mana);
 
-private:
+	void SetData(Player& copy);
+
+public:
 
 	String name;
 
-	int health = 15;
-	const int maxHealth = 30;
+	bool levActive = false;
+	bool SwAActive = false;
 
-	int luck = 0;
+private:
+
+
+	Object inventory[5];
+	Spell spellbook[10];
+
+	int health = 30;
+	const int maxHealth = 30;
 
 	int mana = 15;
 	const int maxMana = 15;
 
-	Object inventory[5];
-	Spell spellbook[10];
 };

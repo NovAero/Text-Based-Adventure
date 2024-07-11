@@ -1,8 +1,8 @@
 #include "Scroll.h"
 
-Scroll::Scroll(int SpellID) : Object(SpellID, itemID, invisible)
+Scroll::Scroll(int ScrollID) : Object(ScrollID, invisible)
 {
-	spell.SetDataID(SpellID);
+	spell.SetDataID(ScrollID-11);
 
 	name = Object::Name();
 	desc = Object::Description();

@@ -10,12 +10,13 @@
 #include "Enemy.h"
 #include "Scroll.h"
 #include "Door.h"
+#include "Key.h"
 
 class GameController
 {
 public:
 
-	GameController(Object* room00, Object* room01, Object* room02, Object* room10, Object* room11, Object* room12, Object* room20, Object* room21, Object* room22);
+	GameController(Player& player, Object* room00, Object* room01, Object* room02, Object* room10, Object* room11, Object* room12, Object* room20, Object* room21, Object* room22);
 	~GameController();
 
 public:
@@ -28,11 +29,18 @@ public:
 
 	void LoadCombat();
 
+	void MHandlerNorth(int X, int Y);
+	void MHandlerEast(int X, int Y, bool hasCemKey, bool levActive);
+	void MHandlerSouth(int X, int Y);
+	void MHandlerWest(int X, int Y);
 
+	void EndGameHandler();
 
 private:
 
 	String command;
+
+	Player player;
 
 	Room rooms[3][3];
 
