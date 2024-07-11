@@ -34,7 +34,7 @@ Spell& Spell::operator=(const Spell& toSet)
 	dmgClamp[0] = toSet.dmgClamp[0];
 	dmgClamp[1] = toSet.dmgClamp[1];
 	manaCost = toSet.manaCost;
-	*IDptr = toSet.spellID;
+	spellID = toSet.GetID();
 
 	return *this;
 }
@@ -110,19 +110,19 @@ void Spell::SetDataID(int id)
 	switch (id)
 	{
 	case 0:
-		*IDptr = id;
+		spellID = 0;
 		name = "Dispel Magic";
 		desc = "Dispels any magic seals or veils in a room";
 		manaCost = 2;
 		break;
 	case 1:
-		*IDptr = id;
+		spellID = 1;
 		name = "Levitate";
 		desc = "The user floats off the ground, and can move freely until they exit a room";
 		manaCost = 4;
 		break;
 	case 2:
-		*IDptr = id;
+		spellID = 2;
 		name = "Fireball";
 		desc = "User casts a ball of flame at a target, deals 2d6 fire damage";
 		dmgClamp[0] = 2;
@@ -130,7 +130,7 @@ void Spell::SetDataID(int id)
 		manaCost = 5;
 		break;
 	case 3:
-		*IDptr = id;
+		spellID = 3;
 		name = "Frost Dart";
 		desc = "You conjure an icicle from moisture in the air, and propel it towards a target dealing 1d8 damage";
 		dmgClamp[0] = 1;
@@ -138,19 +138,19 @@ void Spell::SetDataID(int id)
 		manaCost = 2;
 		break;
 	case 4:
-		*IDptr = id;
+		spellID = 4;
 		name = "Faerie's Stone";
 		desc = "You summon a monocle to peer into other realms, reveals objects hidden by invisibilty";
 		manaCost = 5;
 		break;
 	case 5:
-		*IDptr = id;
+		spellID = 5;
 		name = "Speak With Animals";
 		desc = "You can converse with any animal, until you leave the room";
 		manaCost = 2;
 		break;
 	case 6:
-		*IDptr = id;
+		spellID = 6;
 		name = "Jolt";
 		desc = "You evoke a bolt of arcane lightning towards a target, deals 1d10 damage";
 		dmgClamp[0] = 1;
@@ -158,13 +158,13 @@ void Spell::SetDataID(int id)
 		manaCost = 3;
 		break;
 	case 7:
-		*IDptr = id;
+		spellID = 7;
 		name = "Light Orb";
 		desc = "You summon an undulating orb of light, allowing you to see in the dark";
 		manaCost = 2;
 		break;
 	case 8:
-		*IDptr = id;
+		spellID = 8;
 		name = "Magic Missile";
 		desc = "You propel a bolt of force at a target, deals 1d6 damage";
 		dmgClamp[0] = 1;
@@ -172,12 +172,10 @@ void Spell::SetDataID(int id)
 		manaCost = 1;
 		break;
 	case 9:
-		*IDptr = id;
-		name = "Water Whip";
-		desc = "You manipulate water into a whip, and use it on one target, dealing 1d8 damage. Can be used to put out fires";
-		dmgClamp[0] = 1;
-		dmgClamp[1] = 8;
-		manaCost = 2;
+		spellID = 9;
+		name = "Heal Self";
+		desc = "You channel divine energy and restore your body to a previous state, heals for 1d10 health.";
+		manaCost = 3;
 		break;
 	default:
 		name = "NULL";
@@ -203,25 +201,25 @@ void Spell::SetDataName(String& find)
 		}
 	}
 	//list of all spells without spaces or apostrophes, for the find func
-	String SpellList = "dispelmagiclevitatefireballfrostdartfaeriesstonespeakwithanimalsjoltlightorbmagicmissilewaterwhip";
+	String SpellList = "dispelmagiclevitatefireballfrostdartfaeriesstonespeakwithanimalsjoltlightorbmagicmissilehealself";
 
 	//Finds the string after its been formatted, if it doesnt match any, sets to empty
 	switch (SpellList.Find(find))
 	{ //Cases are based on constant indexes in SpellList ^^^^^
 	case 0: 
-		*IDptr = 0;
+		spellID = 0;
 		name = "Dispel Magic";
 		desc = "Dispels any magic seals or veils in a room";
 		manaCost = 2;
 		break;
 	case 11:
-		*IDptr = 1;
+		spellID = 1;
 		name = "Levitate";
 		desc = "The user floats off the ground, and can move freely until they exit a room";
 		manaCost = 4;
 		break;
 	case 19:
-		*IDptr = 2;
+		spellID = 2;
 		name = "Fireball";
 		desc = "User casts a ball of flame at a target, deals 2d6 fire damage";
 		dmgClamp[0] = 2;
@@ -229,7 +227,7 @@ void Spell::SetDataName(String& find)
 		manaCost = 5;
 		break;
 	case 27:
-		*IDptr = 3;
+		spellID = 3;
 		name = "Frost Dart";
 		desc = "You conjure an icicle from moisture in the air, and propel it towards a target dealing 1d8 damage";
 		dmgClamp[0] = 1;
@@ -237,19 +235,19 @@ void Spell::SetDataName(String& find)
 		manaCost = 2;
 		break;
 	case 36:
-		*IDptr = 4;
+		spellID = 4;
 		name = "Faerie's Stone";
 		desc = "You summon a monocle to peer into other realms, reveals objects hidden by invisibilty";
 		manaCost = 5;
 		break;
 	case 48:
-		*IDptr = 5;
+		spellID = 5;
 		name = "Speak With Animals";
 		desc = "You can converse with any animal, until you leave the room";
 		manaCost = 2;
 		break;
 	case 64:
-		*IDptr = 6;
+		spellID = 6;
 		name = "Jolt";
 		desc = "You evoke a bolt of arcane lightning towards a target, deals 1d10 damage";
 		dmgClamp[0] = 1;
@@ -257,13 +255,13 @@ void Spell::SetDataName(String& find)
 		manaCost = 3;
 		break;
 	case 68:
-		*IDptr = 7;
+		spellID = 7;
 		name = "Light Orb";
 		desc = "You summon an undulating orb of light, allowing you to see in the dark";
 		manaCost = 2;
 		break;
 	case 76:
-		*IDptr = 8;
+		spellID = 8;
 		name = "Magic Missile";
 		desc = "You propel a bolt of force at a target, deals 1d6 damage";
 		dmgClamp[0] = 1;
@@ -271,12 +269,11 @@ void Spell::SetDataName(String& find)
 		manaCost = 1;
 		break;
 	case 88:
-		*IDptr = 9;
-		name = "Water Whip";
-		desc = "You manipulate water into a whip, and use it on one target, dealing 1d8 damage. Can be used to put out fires";
-		dmgClamp[0] = 1;
-		dmgClamp[1] = 8;
-		manaCost = 2;
+		spellID = 9;
+		name = "Heal Self";
+		desc = "You channel divine energy and restore your body to a previous state, heals for 1d10 health.";
+		manaCost = 3;
+		break;
 		break;
 	default:
 		name = "NULL";

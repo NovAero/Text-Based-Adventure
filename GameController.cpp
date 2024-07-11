@@ -1,10 +1,10 @@
 #include "GameController.h"
 
-GameController::GameController(Player& player, Object* room00, Object* room01, Object* room02, Object* room10, Object* room11, Object* room12, Object* room20, Object* room21, Object* room22)
+GameController::GameController(String& player, Object* room00, Object* room01, Object* room02, Object* room10, Object* room11, Object* room12, Object* room20, Object* room21, Object* room22)
 {
 	GenerateRooms(room00,room01,room02,room10,room11,room12,room20,room21,room22);
 
-	this->player.SetData(player);
+	name = player;
 }
 
 GameController::~GameController()
@@ -21,7 +21,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 
 	int commandIndex = 0;
 
-	if (command.Find("move") != -1) {
+	if (command.Find("move") == 0) {
 
 		char direction = command.CharAt(5);
 
@@ -34,7 +34,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 
 		case 'e':
 
-			MHandlerEast(pos[0], pos[1], player.InvHas(CEMETERY_KEY_ID), levActive);
+			MHandlerEast(pos[0], pos[1], hasCemKey, levActive);
 			break;
 
 		case's':
@@ -43,7 +43,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 			break;
 		case'w':
 
-			MHandlerWest(pos[0], pos[1], player.InvHas(RUSTED_KEY_ID), dispelMagUsed);
+			MHandlerWest(pos[0], pos[1], hasRustKey, dispelMagUsed);
 			break;
 		default:
 			system("CLS");
@@ -51,33 +51,61 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 			RunGame(pos[0], pos[1], false);
 			break;
 		}
-	}
-	else {
-		system("CLS");
-		cout << "Not a valid action." << endl;
-		RunGame(pos[0], pos[1], false);
-	}
+	} 
+	else if ((commandIndex = command.Find("use")) == 0 && command.len() > 3) {
 
-	if ((commandIndex = command.Find("use")) != -1) {
-
-		String temp = new char[command.len() - commandIndex + 1];
+		String temp = new char[command.len() - 3];
 		int j = 0;
 
-		for (int i = (commandIndex + 3); i < command.len(); ++i) {
+		for (int i = 4; i < command.len(); ++i) {
 			temp[j] = command[i];
 			++j;
 		}
-		if (temp[command.len() - commandIndex] != '\0') {
-			temp[command.len() - commandIndex] = '\0';
+		if (temp[command.len() - 4] != '\0') {
+			temp[command.len() - 4] = '\0';
 		}
 		command = temp;
-		commandIndex = player.InvHas(command);
+		commandIndex = InvHas(command);
 
 		if (commandIndex != -1) {
-			player.Use(commandIndex);
+			Use(inventory[commandIndex].GetID());
+		}
+		RunGame(pos[0], pos[1], false);
+
+	} 
+	else if ((commandIndex = command.Find("pickup") == 0 && command.len() > 6)) {
+
+		int j = 0;
+		String temp = new char[(command.len() - 6) + 1];
+
+		for (int i = 7; i < command.len(); ++i) {
+			temp[j] = command[i];
+			++j;
+		}
+		if (temp[command.len() - 7] != '\0') {
+			temp[command.len() - 7] = '\0';
+		}
+		command = temp;
+		commandIndex = rooms[pos[0]][pos[1]].HasItem(command);
+
+		if (commandIndex != -1) {
+			AddToInventory(rooms[pos[0]][pos[1]].GetItemAtIndex(commandIndex));
+			DisplayInventory();
+
+			KeyChecker(rooms[pos[0]][pos[1]].GetItemAtIndex(commandIndex));
+
+			rooms[pos[0]][pos[1]].RemoveItem(rooms[pos[0]][pos[1]].GetItemAtIndex(commandIndex));
+			RunGame(pos[0], pos[1], false);
 		}
 
 	}
+	else if ((commandIndex = command.Find("inspect room") == 0)) {
+
+		rooms[pos[0]][pos[1]].ShowContents(fStoneActive);
+
+		RunGame(pos[0], pos[1], false);
+
+	} 
 	else {
 		system("CLS");
 		cout << "Not a valid action." << endl;
@@ -120,7 +148,7 @@ void GameController::GenerateRooms(Object* room00, Object* room01, Object* room0
 void GameController::MHandlerNorth(int X, int Y)
 {
 	try {
-		if (rooms[X][Y].HasItemID(DOOR_ID_N) && X > 0) {
+		if (rooms[X][Y].HasItemID(DOOR_ID_N) != -1 && X > 0) {
 			X--;
 			system("CLS");
 			RunGame(X, Y, true);
@@ -159,7 +187,7 @@ void GameController::MHandlerEast(int X, int Y,bool hasCemKey, bool levActive)
 		else if (rooms[X][Y].Name() == rooms[0][2].Name() && levActive == false) { //player not leveitating at 0,2
 			throw(rooms[X][Y].Name());
 		}
-		else if (rooms[X][Y].HasItemID(DOOR_ID_E) && Y < 2) { //has door to east
+		else if (rooms[X][Y].HasItemID(DOOR_ID_E) != -1 && Y < 2) { //has door to east
 			if (rooms[X][Y + 1].Name() == rooms[0][2].Name() && hasCemKey == true) { //Has key to cemetery and is in cathedral
 				system("CLS");
 				Y++;
@@ -201,7 +229,7 @@ void GameController::MHandlerEast(int X, int Y,bool hasCemKey, bool levActive)
 void GameController::MHandlerSouth(int X, int Y)
 {
 	try {
-		if (rooms[X][Y].HasItemID(DOOR_ID_S) && X < 2) {
+		if (rooms[X][Y].HasItemID(DOOR_ID_S) != -1 && X < 2) {
 			system("CLS");
 			X++;
 			RunGame(X, Y, true);
@@ -233,16 +261,17 @@ void GameController::MHandlerSouth(int X, int Y)
 void GameController::MHandlerWest(int X, int Y, bool hasBoatKey, bool dispelMagUsed)
 {
 	try {
-		if (rooms[X][Y].Name() == rooms[0][1].Name() && dispelMagUsed == true) { //player has used dispel magic on door, permenant
-			system("CLS");
-			Y--;
-			RunGame(X, Y, true);
-		}
-		else if (rooms[X][Y].Name() == rooms[0][1].Name() && dispelMagUsed == false) { //player hasnt used dispel magic
-			throw(rooms[X][Y].Name());
-		}
-		else if (rooms[X][Y].HasItemID(DOOR_ID_W) && Y > 0) { //has door to West
-			if (rooms[X][Y - 1].Name() == rooms[2][0].Name() && hasBoatKey== true) { //Has key to boathouse and is on coast
+		if (rooms[X][Y].HasItemID(DOOR_ID_W) != -1 && Y > 0) { //has door to West
+
+			if (rooms[X][Y].Name() == rooms[0][1].Name() && dispelMagUsed == true) { //player has used dispel magic on door, permenant
+				system("CLS");
+				Y--;
+				RunGame(X, Y, true);
+			}
+			else if (rooms[X][Y].Name() == rooms[0][1].Name() && dispelMagUsed == false) { //player hasnt used dispel magic
+				throw(rooms[X][Y].Name());
+			}
+			if (rooms[X][Y - 1].Name() == rooms[2][0].Name() && hasBoatKey == true) { //Has key to boathouse and is on coast
 				system("CLS");
 				Y--;
 				RunGame(X, Y, true);
@@ -256,7 +285,7 @@ void GameController::MHandlerWest(int X, int Y, bool hasBoatKey, bool dispelMagU
 				RunGame(X, Y, true);
 			}
 		}
-		else { //no room to left
+		else {
 			throw(rooms[X][Y].Name());
 		}
 	}
@@ -323,7 +352,7 @@ void GameController::EndGameHandler()
 		endGameDesc[length] = '\0';
 	}
 	
-	endGameDesc.Replace("[playername]", player.name);
+	endGameDesc.Replace("[playername]", name);
 
 	cout << endGameDesc.GetData();
 	cout << "Are you ready to go?\n\n";
@@ -345,3 +374,255 @@ void GameController::EndGameHandler()
 	};
 }
 
+void GameController::KeyChecker(Object& obj)
+{
+	if (obj.GetID() == RUSTED_KEY_ID) {
+		hasRustKey = true;
+	}
+	if (obj.GetID() == CEMETERY_KEY_ID) {
+		hasCemKey = true;
+	}
+}
+
+
+//PLAYER FUNCTIONS
+
+
+void GameController::Use(int itemID)
+{
+	switch (itemID) {
+	case SCROLL_ID_DM:
+		GiveSpellAccess(SCROLL_ID_DM - 11);
+		break;
+	case SCROLL_ID_L:
+		GiveSpellAccess(SCROLL_ID_L - 11);
+		break;
+	case SCROLL_ID_FB:
+		GiveSpellAccess(SCROLL_ID_FB - 11);
+		break;
+	case SCROLL_ID_FD:
+		GiveSpellAccess(SCROLL_ID_FD - 11);
+		break;
+	case SCROLL_ID_FS:
+		GiveSpellAccess(SCROLL_ID_FS - 11);
+		break;
+	case SCROLL_ID_SWA:
+		GiveSpellAccess(SCROLL_ID_SWA - 11);
+		break;
+	case SCROLL_ID_J:
+		GiveSpellAccess(SCROLL_ID_J - 11);
+		break;
+	case SCROLL_ID_LO:
+		GiveSpellAccess(SCROLL_ID_LO - 11);
+		break;
+	case SCROLL_ID_MM:
+		GiveSpellAccess(SCROLL_ID_MM - 11);
+		break;
+	case SCROLL_ID_H:
+		GiveSpellAccess(SCROLL_ID_H - 11);
+		break;
+	default:
+		cout << "You can't use that item." << endl << endl;
+	}
+}
+
+void GameController::Cast(int spellID)
+{
+	if (FindSpell(spellID) == true) {
+		cout << "You cast " << spellbook[spellID].NameData();
+		return;
+	}
+
+	cout << "You don't know that spell";
+}
+void GameController::Cast(String& spellName)
+{
+	//If the spell is in the players inventory, casts it
+	if (FindSpell(spellName) == true) {
+		Spell spelltmp = spellName;
+
+		if (mana >= spelltmp.GetManaCost()) {
+			cout << "You cast " << spelltmp.NameData();
+			return;
+		}
+		else {
+			cout << "Not enough mana";
+			return;
+		}
+
+	}
+	//Else, you dont know/ it doesn't exist
+	cout << "You don't know that spell";
+}
+void GameController::Cast(const char* spellName)
+{
+	//Conversion for string literal to string obj, passes values
+	String pass = spellName;
+	Cast(pass);
+}
+
+void GameController::DisplayInventory()
+{
+	int s = 1;
+	for (Object i : inventory) {
+		if (i.GetID() != -1) {
+			cout << "Slot " << s << " " << i.Name() << " Description " << i.Description() << endl;
+		}
+		else {
+			cout << "Slot " << s << "Empty" << endl;
+		}
+		s++;
+	}
+}
+
+void GameController::DisplaySpellbook()
+{
+	int k = 1;
+	for (Spell s : spellbook) {
+		if (FindSpell(s.GetID()) == true) {
+			cout << "Spell " << k << " " << s.NameData() << endl;
+			k++;
+		}
+	}
+}
+
+int GameController::FindFirstEmpty()
+{
+	int i = 0;
+	for (Object o : inventory) {
+
+		if (o.GetID() == -1) {
+			return i;
+		}
+		++i;
+	}
+	return -1;
+}
+
+void GameController::AddToInventory(Object& toAdd)
+{
+	int first = FindFirstEmpty();
+	int s = 1;
+
+	if (first != -1) {
+		if (toAdd.GetID() != -1 && canPickup[toAdd.GetID()] == true) {
+			if (InvHasCopy(toAdd) == false) {
+				inventory[first].CopyData(toAdd);
+				cout << "Added " << toAdd.Name() << " to inventory slot " << s << endl;
+				return;
+			}
+			else if (InvHasCopy(toAdd) == true) {
+				cout << "You cannot carry any more of that item!" << endl;
+				return;
+			}
+			else {
+				cout << "You cannot pick that up" << endl;
+			}
+			s++;
+		}
+	}
+	else {
+		cout << "Inventory is full!" << endl;
+	}
+}
+bool GameController::InvHasCopy(Object& obj)
+{
+	for (Object o : inventory) {
+
+		if (o.GetID() == obj.GetID()) {
+			return true;
+		}
+	}
+	return false;
+}
+
+int GameController::InvHas(int ID)
+{
+	int i = 0;
+	for (Object o : inventory) {
+		if (o.GetID() == ID) {
+			return i;
+		}
+		++i;
+	}
+	return -1;
+}
+
+int GameController::InvHas(String& itemName)
+{
+	int i = 0;
+	for (Object o : inventory) {
+		String temp = o.NameObj();
+		temp.ToLower();
+		if (temp == itemName.ToLower()) {
+			return i;
+		}
+		i++;
+	}
+	return -1;
+}
+
+bool GameController::FindSpell(int spellID)
+{ //Binary search for spellID in player's spellbook, more effective at larger sizes
+	int l = 0;
+	int r = 9;
+
+	if (spellbook[spellID].GetID() == -1) {//If spellID is -1, spell isnt unlocked
+		return false;
+	}
+
+	while (l <= r) {
+		int m = ((l + r) / 2);
+
+		if (m == spellID) {
+			return true;
+		}
+		else if (m < spellID) {
+			l = m + 1;
+
+		}
+		else if (m > spellID) {
+			r = m - 1;
+		}
+	}
+	return false;
+}
+bool GameController::FindSpell(String& find)
+{
+	Spell temp = find;
+	if (FindSpell(temp.GetID()) == false) {
+		return false;
+	}
+	return true;
+}
+bool GameController::FindSpell(const char* find)
+{
+	Spell temp = find;
+	if (FindSpell(temp.GetID()) == false) {
+		return false;
+	}
+	return true;
+}
+
+void GameController::GiveSpellAccess(int spellID)
+{ //Sets the player's spellbook at index spellID to corresponding spell, essential bool flip
+	spellbook[spellID].SetDataID(spellID);
+}
+
+void GameController::Hurt(int damage)
+{
+	health -= damage;
+}
+
+int GameController::GetMana()
+{
+	return mana;
+}
+
+void GameController::SetMana(int mana)
+{
+	this->mana = mana;
+	if (this->mana >= maxMana) {
+		this->mana = maxMana;
+	}
+}

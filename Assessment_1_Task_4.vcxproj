@@ -27,7 +27,6 @@
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="ManaFtn.cpp" />
     <ClCompile Include="Object.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Scroll.cpp" />
     <ClCompile Include="Spell.cpp" />
@@ -41,7 +40,6 @@
     <ClInclude Include="Key.h" />
     <ClInclude Include="ManaFtn.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Scroll.h" />
     <ClInclude Include="Spell.h" />

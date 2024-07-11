@@ -1,5 +1,9 @@
 #pragma once
 #include "Object.h"
+
+#define RUSTED_KEY_ID 5
+#define CEMETERY_KEY_ID 6
+
 class Key : public Object
 {
 public:
@@ -11,8 +15,6 @@ public:
 
 	const char* Name() override;
 	const char* Description() override;
-
-	bool CanPickup() override;
 
 private:
 	

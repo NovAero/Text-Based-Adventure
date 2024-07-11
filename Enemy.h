@@ -1,5 +1,7 @@
 #include "Object.h"
 
+#define ENEMY_ID 3
+
 class Enemy : public Object {
 public:
 
@@ -14,14 +16,11 @@ public:
 
 	void Hurt(int damage);
 
-	bool CanPickup() override;
-
 private:
 
 	String name;
 	String desc;
 
-	bool canPickup = false;
 	bool invisible = false;
 
 	int health = 15;

@@ -1,6 +1,6 @@
 #include "Cat.h"
 
-Cat::Cat() : Object("Cat","A furry friend.", CAT_ID, false)
+Cat::Cat() : Object("Cat","A furry friend.", CAT_ID, invisible)
 {
 	name = Object::Name();
 	desc = Object::Description();
@@ -39,11 +39,6 @@ const char* Cat::Interact(bool SwAisActive, int numOfHidden)
 	}
 	converse = "Meow";
 	return converse.GetData();
-}
-
-bool Cat::CanPickup()
-{
-	return canPickup;
 }
 
 void Cat::Pet()

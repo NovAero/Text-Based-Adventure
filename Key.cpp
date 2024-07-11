@@ -25,8 +25,3 @@ const char* Key::Description()
 {
 	return desc.GetData();
 }
-
-bool Key::CanPickup()
-{
-	return canPickup;
-}

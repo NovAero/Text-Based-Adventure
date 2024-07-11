@@ -3,12 +3,12 @@
 #include <string>
 #include "String.h"
 #include "GameController.h"
-
+#include "Object.h"
 
 	Cat cats[2];
 	Enemy enemies[5];
 	ManaFtn fountain;
-	Scroll scrolls[10] = {SCROLL_ID_DM,SCROLL_ID_L,SCROLL_ID_FB,SCROLL_ID_FD,SCROLL_ID_FS,SCROLL_ID_SWA,SCROLL_ID_J,SCROLL_ID_LO,SCROLL_ID_MM,SCROLL_ID_WW};
+	Scroll scrolls[10] = {SCROLL_ID_DM,SCROLL_ID_L,SCROLL_ID_FB,SCROLL_ID_FD,SCROLL_ID_FS,SCROLL_ID_SWA,SCROLL_ID_J,SCROLL_ID_LO,SCROLL_ID_MM,SCROLL_ID_H};
 	Door exitGates[4] = { DOOR_ID_N,DOOR_ID_E,DOOR_ID_S,DOOR_ID_W };
 
 	Door boatDoor(DOOR_ID_W, "Boat Shed Door", "Run down wooden double doors, locked.");
@@ -35,11 +35,9 @@ int main() {
 	cout << "What is your character's name?\n";
 	nameSet.Input();
 
-	Player playerset(nameSet);
-
 	system("CLS");
 
-	GameController ctrl(playerset,room00,room01,room02,room10,room11,room12,room20,room21,room22);
+	GameController ctrl(nameSet,room00,room01,room02,room10,room11,room12,room20,room21,room22);
 	
-	ctrl.RunGame(2,1, true);
+	ctrl.RunGame(1,2, true);
 }

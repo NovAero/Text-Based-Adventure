@@ -21,7 +21,12 @@ public:
 	int GetY();
 
 	void ShowContents(bool fStoneActive);
-	bool HasItemID(int ID);
+
+	int HasItemID(int ID);
+	int HasItem(String& item);
+
+	Object& GetItemAtIndex(int index);
+	
 	const char* Name();
 	void Description(int roomX, int roomY);
 

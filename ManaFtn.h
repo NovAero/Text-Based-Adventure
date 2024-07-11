@@ -1,6 +1,7 @@
 #pragma once
 #include "Object.h"
-#include "Player.h"
+
+#define MANAFTN_ID 2
 
 class ManaFtn : public Object {
 public:
@@ -14,13 +15,8 @@ public:
 	const char* Name() override;
 	const char* Description() override;
 
-	bool CanPickup() override;
-
-	void Use(Player& plr);
-
 private:
 
-	bool canPickup = false;
 	bool invisible = false;
 
 	String name;

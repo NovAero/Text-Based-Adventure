@@ -52,6 +52,7 @@ void Object::SetData(String& name, String& description, int ID, bool isInvis)
 	desc = description;
 	SetID(ID);
 	invisible = isInvis;
+	
 }
 
 void Object::SetData(const char* name, const char* description, int ID, bool isInvis)
@@ -60,6 +61,7 @@ void Object::SetData(const char* name, const char* description, int ID, bool isI
 	desc = description;
 	SetID(ID);
 	invisible = isInvis;
+	
 }
 
 void Object::SetID(int ID)
@@ -90,11 +92,6 @@ String& Object::NameObj()
 const char* Object::Description() 
 {
 	return desc.GetData();
-}
-
-void Object::Use() 
-{
-	
 }
 
 bool Object::isInvisible()

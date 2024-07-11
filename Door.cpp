@@ -10,8 +10,8 @@ Door::Door(int directionID) : Object("Exit Gate","", directionID, false)
 
 Door::Door(int directionID, const char* doorName, const char* doorDesc) : Object(doorName, doorDesc, directionID, false)
 {
-	doorName = Object::Name();
-	doorDesc = Object::Description();
+	this->doorName = Object::Name();
+	this->doorDesc = Object::Description();
 
 	dirID = directionID;
 }
@@ -40,9 +40,4 @@ String& Door::NameObj()
 const char* Door::Description()
 {
 	return doorDesc.GetData();
-}
-
-bool Door::CanPickup()
-{
-	return canPickup;
 }

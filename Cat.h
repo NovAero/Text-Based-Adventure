@@ -1,6 +1,8 @@
 #pragma once
 #include "Object.h"
 
+#define CAT_ID 1
+
 class Cat : public Object{
 public:
 
@@ -14,7 +16,6 @@ public:
 	const char* Description() override;
 
 	const char* Interact(bool SwAisActive, int numOfHidden);
-	bool CanPickup() override;
 
 	void Pet();
 

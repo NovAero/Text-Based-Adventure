@@ -82,14 +82,35 @@ void Room::ShowContents(bool fStoneActive)
 	cout << contents.GetData();
 }
 
-bool Room::HasItemID(int ID)
+int Room::HasItemID(int ID)
 {
+	int iterator = 0;
 	for (Object h : itemsInRoom) {
 		if (h.GetID() == ID) {
-			return true;
+			return iterator;
 		}
+		++ iterator;
 	}
-	return false;
+	return -1;
+}
+
+int Room::HasItem(String& item)
+{
+	int iterator = 0;
+	for (Object h : itemsInRoom) {
+		if (h.NameObj().ToLower() == item.GetData()) {
+			return iterator;
+		}
+		++iterator;
+	}
+	return -1;
+}
+
+Object& Room::GetItemAtIndex(int index)
+{
+	if (index != -1) {
+		return itemsInRoom[index];
+	}
 }
 
 const char* Room::Name()
