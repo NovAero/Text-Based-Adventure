@@ -1,6 +1,5 @@
 #pragma once
 #include "Object.h"
-#include "String.h"
 #include <fstream>
 
 #define MAX_ITEM_COUNT 10

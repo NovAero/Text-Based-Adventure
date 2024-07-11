@@ -29,5 +29,13 @@ int main() {
 
 	GameController ctrl(room00,room01,room02,room10,room11,room12,room20,room21,room22);
 	
-	ctrl.RunGame();
+	ctrl.LoadRoom(0, 0);
+	ctrl.LoadRoom(0, 1);
+	ctrl.LoadRoom(0, 2);
+	ctrl.LoadRoom(1, 0);
+	ctrl.LoadRoom(1, 1);
+	ctrl.LoadRoom(1, 2);
+	ctrl.LoadRoom(2, 0);
+	ctrl.LoadRoom(2, 1);
+	ctrl.LoadRoom(2, 2);
 }

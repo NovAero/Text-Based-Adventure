@@ -131,28 +131,38 @@ void Room::Description(int roomX, int roomY)
 
 	if (descToSeek > 0){ //If iterator is 0 it doesnt need iterator, thus skips a step, otherwise keep going
 		
-		while (iterator != descToSeek) {
+		while (iterator != descToSeek-1) {
 			file.get(singleCharacter) >> noskipws;
 			if (singleCharacter == END_OF_LINE) { //if found end char (#) add to iterator
 				iterator++;
 			}
 			else {
-				length++;
 				charsDeep++;
+				length++;
 			}
 		}
 
-		retDesc = new char[length + 3 ]; //Makes new char[] == length of description
-		charsDeep = 0; //Sets charsDeep back to 0 again, to iterate over temp[] to set it's contents
+		while (iterator != descToSeek)	{
+			file.get(singleCharacter) >> noskipws;
+			if (singleCharacter == END_OF_LINE) {
+				iterator++;
+			}
+			else {
+				length++;
+			}
+		}
 
-		while (charsDeep <= length) //Sets contents of temp until end of Description
+		retDesc = new char[length + 1 ]; //Makes new char[] == length of description
+		iterator = 0;
+
+		while (charsDeep < length) //Sets contents of temp until end of Description
 		{
 			file.get(singleCharacter) >> noskipws;
 
 			if (singleCharacter != END_OF_LINE) {
-				retDesc[charsDeep] = singleCharacter;
-				cout << retDesc[charsDeep];
-				charsDeep++;
+				retDesc[iterator] = singleCharacter;
+				cout << retDesc[iterator];
+				iterator++;
 			}
 			else {
 				break;
@@ -160,8 +170,6 @@ void Room::Description(int roomX, int roomY)
 		}
 
 		file.close(); //close file !!!
-
-		length = retDesc.unsafeLen(); //Unsafe length check, see def in String.cpp
 
 		if (retDesc[length] != '\0') { //Check for null terminator, adds if it doesnt exist
 			retDesc[length] = '\0';
