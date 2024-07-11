@@ -19,7 +19,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 	command.Input();
 	command.ToLower();
 
-	if (command.Find("move ") != -1) {
+	if (command.Find("move") != -1) {
 
 		char direction = command.CharAt(5);
 
@@ -41,12 +41,21 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 			break;
 		case'w':
 
+			MHandlerWest(pos[0], pos[1], player.InvHas(RUSTED_KEY_ID), dispelMagUsed);
 			break;
 		default:
-
+			system("CLS");
+			cout << "Not a valid action." << endl;
+			RunGame(pos[0], pos[1], false);
 			break;
 		}
 	}
+	else {
+		system("CLS");
+		cout << "Not a valid action." << endl;
+		RunGame(pos[0], pos[1], false);
+	}
+
 }
 
 void GameController::LoadRoom(Room& toLoad, bool isNewRoom)
@@ -110,7 +119,6 @@ void GameController::MHandlerNorth(int X, int Y)
 			system("CLS");
 			cout << name << " doesn't have a back door, you can't walk through walls." << endl;
 		}
-		system("CLS");
 		RunGame(X, Y, false);
 	}
 }
@@ -168,7 +176,8 @@ void GameController::MHandlerEast(int X, int Y,bool hasCemKey, bool levActive)
 void GameController::MHandlerSouth(int X, int Y)
 {
 	try {
-		if (rooms[X][Y].HasItemID(DOOR_ID_N) && X < 2) {
+		if (rooms[X][Y].HasItemID(DOOR_ID_S) && X < 2) {
+			system("CLS");
 			X++;
 			RunGame(X, Y, true);
 		}
@@ -200,48 +209,49 @@ void GameController::MHandlerSouth(int X, int Y)
 void GameController::MHandlerWest(int X, int Y, bool hasBoatKey, bool dispelMagUsed)
 {
 	try {
-		if (rooms[X][Y].Name() == rooms[0][2].Name() && levActive == true) { //player is levitating and at 0,2
-			EndGameHandler();
-			system("pause");
+		if (rooms[X][Y].Name() == rooms[0][1].Name() && dispelMagUsed == true) { //player has used dispel magic on door, permenant
+			system("CLS");
+			Y--;
+			RunGame(X, Y, true);
 		}
-		else if (rooms[X][Y].Name() == rooms[0][2].Name() && levActive == false) { //player not leveitating at 0,2
+		else if (rooms[X][Y].Name() == rooms[0][1].Name() && dispelMagUsed == false) { //player hasnt used dispel magic
 			throw(rooms[X][Y].Name());
 		}
-		else if (rooms[X][Y].HasItemID(DOOR_ID_E) && Y < 2) { //has door to east
-			if (rooms[X][Y + 1].Name() == rooms[0][2].Name() && hasCemKey == true) { //Has key to cemetery and is in cathedral
+		else if (rooms[X][Y].HasItemID(DOOR_ID_W) && Y > 0) { //has door to West
+			if (rooms[X][Y - 1].Name() == rooms[2][0].Name() && hasBoatKey== true) { //Has key to boathouse and is on coast
 				system("CLS");
-				Y++;
+				Y--;
 				RunGame(X, Y, true);
 			}
-			else if (rooms[X][Y + 1].Name() == rooms[0][2].Name() && hasCemKey == false) {//Doesnt have key, is in cathedral
+			else if (rooms[X][Y - 1].Name() == rooms[2][0].Name() && hasBoatKey == false) {//Doesnt have key, is on coast
 				throw(rooms[X][Y].Name());
 			}
-			else { //isnt in cathedral
+			else { //isnt in cathedral or boathouse
 				system("CLS");
-				Y++;
+				Y--;
 				RunGame(X, Y, true);
 			}
 		}
-		else { //no room to right
+		else { //no room to left
 			throw(rooms[X][Y].Name());
 		}
 	}
 	catch (const char* name) {
-		if (name == rooms[2][2].Name()) { //Rock pools
+		if (name == rooms[2][1].Name()) { //Coast
 			system("CLS");
-			cout << "You are met with a sheer cliff that is too steep to climb." << endl;
+			cout << "The Boat house doors are locked." << endl;
 		}
-		else if (name == rooms[1][2].Name()) { //Library
+		else if (name == rooms[2][0].Name() || name == rooms[0][0].Name()) { //Boat House or Ossuary
 			system("CLS");
 			cout << name << " doesn't have a back door, you can't walk through walls." << endl;
 		}
 		else if (name == rooms[0][1].Name()) { //Cathedral
 			system("CLS");
-			cout << "You try to open the cemetery door, but it's locked." << endl;
+			cout << "The door is magically sealed, and cannot be opened." << endl;
 		}
-		else if (name == rooms[0][2].Name()) { //Cemetery
+		else if (name == rooms[1][0].Name()) { //Forest
 			system("CLS");
-			cout << "A wide chasm block your path, you definitely can't make that jump." << endl;
+			cout << "The forest is too thick in that direction." << endl;
 		}
 		RunGame(X, Y, false);
 	}

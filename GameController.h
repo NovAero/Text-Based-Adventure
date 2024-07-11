@@ -35,6 +35,8 @@ public:
 	void MHandlerWest(int X, int Y, bool hasBoatKey, bool dispelMagUsed);
 
 	void EndGameHandler();
+	
+	bool dispelMagUsed = false;
 
 private:
 
