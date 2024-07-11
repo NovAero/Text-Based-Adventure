@@ -10,13 +10,14 @@ GameController::~GameController()
 }
 
 void GameController::RunGame()
-{	
-	int pos[2] = { 0, 0 };
+{
+	LoadRoom(1, 1);
+	int pos[2] = { 1, 1 };
 
 	command.Input();
 	command.ToLower();
 
-	if (command.Find("move ")) {
+	if (command.Find("move ") != -1) {
 
 		char direction = command.CharAt(5);
 
@@ -24,8 +25,8 @@ void GameController::RunGame()
 
 		case 'n':
 			try {
-				if (rooms[pos[0]][pos[1]].HasItemID(DOOR_ID_N)) {
-					pos[1]--;
+				if (rooms[pos[0]][pos[1]].HasItemID(DOOR_ID_N) && pos[0] > 0) {
+					pos[0]--;
 					LoadRoom(pos[0], pos[1]);
 				}
 				else {
@@ -33,13 +34,34 @@ void GameController::RunGame()
 				}
 			}
 			catch(const char* name) {
-				cout << "You cant go that way";
+				if (name == rooms[2][2].Name()) {
+					cout << "Trying to move north, you are met with a sheer cliff that is too steep to climb.";
+				}
+				else if (name == rooms[1][0].Name()) {
+					cout << "The forest is too thick in that direction."<<endl;
+				}
+				else if (name == rooms[0][2].Name()) {
+					cout << "The cemetery fences are to tall to climb."<<endl;
+				}
+				else {
+					cout << name << " doesn't have a back door, you can't walk through walls." << endl;
+				}
 			}
 			break;
 
 		case 'e':
+			try {
+				if (rooms[pos[0]][pos[1]].HasItemID(DOOR_ID_E) && pos[1] < 2) {
 
+
+				}
+
+			}
+			catch (int n) {
+
+			}
 			break;
+
 		case's':
 
 			break;
@@ -56,6 +78,7 @@ void GameController::RunGame()
 
 void GameController::LoadRoom(Room& toLoad)
 {
+	cout << "Entering " << toLoad.Name() << "\n\n";
 	toLoad.Description(toLoad.GetX(), toLoad.GetY());
 }
 

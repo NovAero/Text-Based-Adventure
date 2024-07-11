@@ -69,6 +69,7 @@ public: // Functions //
 	String& ToLower();
 	String& ToUpper();
 
+	size_t Find(const char* str);
 	size_t Find(const String& str);
 	size_t Find(size_t startindex, const String& str);
 

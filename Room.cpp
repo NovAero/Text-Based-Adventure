@@ -142,10 +142,10 @@ void Room::Description(int roomX, int roomY)
 			}
 		}
 
-		retDesc = new char[length + 1 ]; //Makes new char[] == length of description
+		retDesc = new char[length + 3 ]; //Makes new char[] == length of description
 		charsDeep = 0; //Sets charsDeep back to 0 again, to iterate over temp[] to set it's contents
 
-		while (charsDeep < length) //Sets contents of temp until end of Description
+		while (charsDeep <= length) //Sets contents of temp until end of Description
 		{
 			file.get(singleCharacter) >> noskipws;
 
@@ -168,7 +168,7 @@ void Room::Description(int roomX, int roomY)
 		}
 
 		retDesc.Print('n');//Prints the contents to the console with a \n
-		cout << '\n';
+		cout << "\n\n";
 		
 	}
 	else { //Does same as above, just skips Step 1: find how deep, since it's starting at the 0 index of file
@@ -205,6 +205,7 @@ void Room::Description(int roomX, int roomY)
 		}
 
 		retDesc.Print('n'); //returns the contents of retDesc, which is then deleted when out of funtion YAY no memory leaks!!! (hopefully)
+		cout << "\n\n";
 	}
 }
 

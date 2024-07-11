@@ -368,6 +368,12 @@ String& String::ToUpper()
 	return *this;
 }
 
+size_t String::Find(const char* str)
+{
+	String temp = str;
+	return Find(0, str);
+}
+
 size_t String::Find(const String& str)
 {
 	//Runs Find() at index 0, removed identical lines of code

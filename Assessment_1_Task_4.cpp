@@ -19,7 +19,7 @@
 	Object room01[MAX_ITEM_COUNT];
 	Object room02[MAX_ITEM_COUNT];
 	Object room10[MAX_ITEM_COUNT];
-	Object room11[MAX_ITEM_COUNT];
+	Object room11[MAX_ITEM_COUNT] = { exitGates[0], exitGates[1], exitGates[2], exitGates[3] };
 	Object room12[MAX_ITEM_COUNT];
 	Object room20[MAX_ITEM_COUNT];
 	Object room21[MAX_ITEM_COUNT] = { boatDoor, exitGates[0], exitGates[1]};
@@ -28,15 +28,6 @@
 int main() {
 
 	GameController ctrl(room00,room01,room02,room10,room11,room12,room20,room21,room22);
-
-	ctrl.LoadRoom(0, 0);
-	ctrl.LoadRoom(0, 1);
-	ctrl.LoadRoom(0, 2);
-	ctrl.LoadRoom(1, 0);
-	ctrl.LoadRoom(1, 1);
-	ctrl.LoadRoom(1, 2);
-	ctrl.LoadRoom(2, 0);
-	ctrl.LoadRoom(2, 1);
-	ctrl.LoadRoom(2, 2);
-
+	
+	ctrl.RunGame();
 }
