@@ -30,5 +30,5 @@ private:
 
     Spell spell;
     
-    int itemID = SCROLL_ID;
+    int itemID = -1;
 };
