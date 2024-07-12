@@ -40,6 +40,7 @@ int Room::GetY()
 	return posY;
 }
 
+//Shows contents of room, checks for fairystone (see invis) and light orb (see in dark) 
 void Room::ShowContents(bool fStoneActive, bool LOrbActive)
 {
 	String contents = "In the room you can see ";
@@ -115,6 +116,7 @@ void Room::ShowContents(bool fStoneActive, bool LOrbActive)
 	}
 }
 
+//Returns amount of invisible items in room
 int Room::AnyHiddenItems()
 {
 	int i = 0;
@@ -127,6 +129,7 @@ int Room::AnyHiddenItems()
 	return -1;
 }
 
+//Checks if room has an item by item ID, returns index, ooverload checks by name
 int Room::HasItemID(int ID)
 {
 	int iterator = 0;
@@ -138,7 +141,6 @@ int Room::HasItemID(int ID)
 	}
 	return -1;
 }
-
 int Room::HasItem(String& item)
 {
 	int iterator = 0;
@@ -151,6 +153,7 @@ int Room::HasItem(String& item)
 	return -1;
 }
 
+//returns specific item's reference at index of roomContents
 Object& Room::GetItemAtIndex(int index)
 {
 	if (index != -1) {
@@ -158,11 +161,13 @@ Object& Room::GetItemAtIndex(int index)
 	}
 }
 
+//Returns the room's name as printable text
 const char* Room::Name()
 {
 	return roomName.GetData();
 }
 
+//Runs through file wuth all descriptions to read them into a string, saves lots of memory by not loading all 2500+ chars at all times
 void Room::Description(int roomX, int roomY, bool LOrbActive)
 {
 	
@@ -191,7 +196,7 @@ void Room::Description(int roomX, int roomY, bool LOrbActive)
 	file.open("Room Descriptions.txt", std::ios::in);
 
 	if (!file.is_open()) { //If its not open, its open by something else, exits
-		cout << "Failure to open file";
+		cout << "Failure to open file Room Descriptions.txt";
 		return;
 	}
 	
@@ -274,6 +279,7 @@ void Room::Description(int roomX, int roomY, bool LOrbActive)
 	}
 }
 
+//Finds first empty slot in rooms contents
 int Room::FindFirstEmpty()
 {
 	int i = 0;
@@ -287,6 +293,7 @@ int Room::FindFirstEmpty()
 	return -1;
 }
 
+//gets num of doors, important for display items check
 int Room::NumOfDoors()
 {
 	int k = 0;
@@ -301,6 +308,7 @@ int Room::NumOfDoors()
 	return k;
 }
 
+//Adds item to room more of a debug func
 void Room::AppendItem(Object& obj)
 {
 	if (FindFirstEmpty() != -1) {
@@ -310,6 +318,7 @@ void Room::AppendItem(Object& obj)
 	cout << "No Empty Slots";
 }
 
+//removes item from room at index objID
 void Room::RemoveItem(int objID)
 {
 	for (Object& i : itemsInRoom) {
@@ -323,18 +332,17 @@ void Room::RemoveItem(int objID)
 	cout << "Item is not in room" << endl;
 }
 
+//Self explanatory 
 void Room::SetContents(Object* items)
 {
 	for (int i = 0; i < MAX_ITEM_COUNT; i++) {
 		AppendItem(items[i]);
 	}
 }
-
 void Room::SetName(const char* name)
 {
 	roomName = name;
 }
-
 void Room::SetDesc(const char* desc)
 {
 	roomDesc = desc;

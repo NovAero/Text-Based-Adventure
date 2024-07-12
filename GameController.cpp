@@ -11,6 +11,7 @@ GameController::~GameController()
 {
 }
 
+//Main game loop
 void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 {
 	LoadRoom(roomX, roomY, isNewRoom);
@@ -21,7 +22,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 
 	int commandIndex = 0;
 
-	if (command.Find("move") == 0) {
+	if (command.Find("move") == 0) { //Moves in a direction (N E S W)
 
 		char direction = command.CharAt(5);
 
@@ -52,7 +53,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 			break;
 		}
 	} 
-	else if ((commandIndex = command.Find("use")) == 0 && command.len() > 3) {
+	else if ((commandIndex = command.Find("use")) == 0 && command.len() > 3) { //Use uses an item in inventory if possible
 		system("CLS");
 		char* temp = new char[command.len() - 3 + 1];
 		int j = 0;
@@ -81,7 +82,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 		RunGame(pos[0], pos[1], false);
 
 	} 
-	else if ((commandIndex = command.Find("pickup") == 0 && command.len() > 7)) {
+	else if ((commandIndex = command.Find("pickup") == 0 && command.len() > 7)) { //Pickup item, will add to inventory if able to, then deletes it from the room
 		system("CLS");
 		int j = 0;
 		char* temp = new char[(command.len() - 6) + 1];
@@ -115,7 +116,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 		RunGame(pos[0], pos[1], false);
 
 	}
-	else if ((commandIndex = command.Find("inspect room") == 0)) {
+	else if ((commandIndex = command.Find("inspect room") == 0)) { //Shows contents of room
 		system("CLS");
 		rooms[pos[0]][pos[1]].ShowContents(fStoneActive, LOrbActive);
 
@@ -124,22 +125,22 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 		RunGame(pos[0], pos[1], false);
 
 	}
-	else if ((commandIndex = command.Find("show inv") == 0)) {
+	else if ((commandIndex = command.Find("show inv") == 0)) { //shows contents of inventory, and Hp and Mana
 		system("CLS");
 
 		DisplayInventory();
 		RunGame(pos[0], pos[1], false);
 	} 
-	else if(commandIndex = command.Find("show spell") == 0){
+	else if(commandIndex = command.Find("show spell") == 0){ //Shows spellbook with spells known/unknown
 		system("CLS");
 		DisplaySpellbook();
 		cout << endl;
 
 		RunGame(pos[0], pos[1], false);
 	}
-	else if (commandIndex = command.Find("help") == 0) {
+	else if (commandIndex = command.Find("help") == 0) { //Displays all commands available
 		system("CLS");
-		cout << "Commands:\n-move [n/s/e/w]\n-pickup [item]\n-use [item in inventory]\n-inspect room\n-show [inv/spell]\n-cast [spell]\n-interact [target name]\n";
+		cout << "Commands:\n-move [n/s/e/w]\n-pickup [item]\n-use [item in inventory]\n-inspect room\n-show [inv/spell]\n-cast [spell]\n-interact [target name]\n-map\n";
 		RunGame(pos[0], pos[1], false);
 	}
 	else if (commandIndex = command.Find("cast") == 0 && command.len() > 4) {
@@ -164,7 +165,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 		}
 		RunGame(pos[0], pos[1], false);
 	}
-	else if (commandIndex = command.Find("interact") == 0 && command.len() > 8 ) {
+	else if (commandIndex = command.Find("interact") == 0 && command.len() > 8 ) { //Interact with object in room
 		system("CLS");
 		char* temp = new char[(command.len() - 8) + 1];
 		int j = 0;
@@ -183,16 +184,23 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 
 		RunGame(pos[0], pos[1], false);
 	}
-	else if (commandIndex = command.Find("attack") == 0) {
+	else if (commandIndex = command.Find("attack") == 0) { //starts attack if in forest 
 		if (rooms[pos[0]][pos[1]].HasItemID(ENEMY_ID)) {
 			system("CLS");
 			LoadCombat();
 
 		}
 		else {
+			system("CLS");
 			cout << "There is nothing to fight here" << endl;
+			RunGame(pos[0], pos[1], false);
 		}
 
+	}
+	else if (commandIndex = command.Find("map") == 0) {
+		system("CLS");
+		Map();
+		RunGame(pos[0], pos[1], false);
 	}
 	else {
 		system("CLS");
@@ -217,6 +225,7 @@ void GameController::LoadRoom(int x, int y, bool isNewRoom)
 	LoadRoom(rooms[x][y], isNewRoom);
 }
 
+//Fills out room names, contents, and coords
 void GameController::GenerateRooms(Object* room00, Object* room01, Object* room02, Object* room10, Object* room11, Object* room12, Object* room20, Object* room21, Object* room22)
 {
 
@@ -232,6 +241,7 @@ void GameController::GenerateRooms(Object* room00, Object* room01, Object* room0
 
 }
 
+//Movement handlers
 void GameController::MHandlerNorth(int X, int Y)
 {
 	try {
@@ -397,6 +407,7 @@ void GameController::MHandlerWest(int X, int Y, bool hasBoatKey, bool dispelMagU
 	}
 }
 
+//End game handler
 void GameController::EndGameHandler()
 {
 	system("CLS");
@@ -461,6 +472,7 @@ void GameController::EndGameHandler()
 	};
 }
 
+//Bool check for it ID being picked up is a key, which allows you to open doors/finish quest
 void GameController::KeyChecker(Object& obj)
 {
 	if (obj.GetID() == RUSTED_KEY_ID) {
@@ -474,6 +486,7 @@ void GameController::KeyChecker(Object& obj)
 	}
 }
 
+//Runs combat loop
 void GameController::LoadCombat()
 {
 	cout << "You approach the two goblins and start a fight!!" << endl;
@@ -519,7 +532,7 @@ void GameController::LoadCombat()
 
 //PLAYER FUNCTIONS
 
-
+//Player actions for combat
 void GameController::PlayerActionSelector()
 {
 
@@ -608,14 +621,14 @@ void GameController::PlayerActionSelector()
 		PlayerActionSelector();
 	}
 }
-
+//Enemy action for combat
 void GameController::EnemyActionSelector()
 {
 	int atkDmg = rand() % dmgClamp[1] + dmgClamp[0];
 
 	cout << endl << "You were hit for " << Hurt(atkDmg) << " health" << endl;
 }
-
+//Heal handler
 int GameController::Heal(int healAmt)
 {
 	health += healAmt;
@@ -625,6 +638,34 @@ int GameController::Heal(int healAmt)
 	return healAmt;
 }
 
+//Displays map
+void GameController::Map()
+{
+	char singleCharacter = 0;
+	char temp[2] = "0";
+
+	fstream file; //Opens file for reading
+	file.open("Map.txt", std::ios::in);
+
+	if (!file.is_open()) { //If its not open, its open by something else, exits
+		cout << "Failure to open file Map.txt";
+		return;
+	}
+
+	while (singleCharacter != '#') //while char isn't #, keeps printing
+	{
+		file.get(singleCharacter) >> noskipws;
+		if (singleCharacter == '#') {
+			break;
+		}
+		temp[0] = singleCharacter;
+		cout << temp[0];
+	}
+
+	file.close(); //close file !!!
+}
+
+//Use handler
 void GameController::Use(int itemID)
 {
 	String useText = "You read the Scroll of ";
@@ -676,6 +717,7 @@ void GameController::Use(int itemID)
 	}
 }
 
+//Interaction handler
 void GameController::Interact(String& name, Room& currentRoom)
 {
 	int itemIndex = currentRoom.HasItem(name);
@@ -721,6 +763,7 @@ void GameController::Interact(String& name, Room& currentRoom)
 
 }
 
+//Spellcast handlers
 void GameController::Cast(int spellID)
 {
 	if (FindSpell(spellID) == true) {
@@ -804,6 +847,7 @@ void GameController::Cast(const char* spellName)
 	Cast(pass);
 }
 
+//Displays inventory, hp, and mana
 void GameController::DisplayInventory()
 {
 	int s = 1;
@@ -818,7 +862,7 @@ void GameController::DisplayInventory()
 		s++;
 	}
 }
-
+//Displays spells, if unknown shows "you dont know" text
 void GameController::DisplaySpellbook()
 {
 	int k = 1;
@@ -834,6 +878,7 @@ void GameController::DisplaySpellbook()
 	}
 }
 
+//Finds first empty object in inventory
 int GameController::FindFirstEmpty()
 {
 	int i = 0;
@@ -847,6 +892,7 @@ int GameController::FindFirstEmpty()
 	return -1;
 }
 
+//Add item to inventory
 void GameController::AddToInventory(Object& toAdd)
 {
 	int first = FindFirstEmpty();
@@ -882,6 +928,7 @@ bool GameController::InvHasCopy(Object& obj)
 	return false;
 }
 
+//Checks if inventory has item, if it does returns the index, if not returns -1
 int GameController::InvHas(int ID)
 {
 	int i = 0;
@@ -907,6 +954,7 @@ int GameController::InvHas(String& itemName)
 	return -1;
 }
 
+//Checks player spellbook if they have access to a spell
 bool GameController::FindSpell(int spellID)
 { //Binary search for spellID in player's spellbook, more effective at larger sizes
 	int l = 0;
@@ -949,17 +997,20 @@ bool GameController::FindSpell(const char* find)
 	return true;
 }
 
+//Sets spell access in spellbook from -1 to the spell's ID
 void GameController::GiveSpellAccess(int spellID)
 { //Sets the player's spellbook at index spellID to corresponding spell, essential bool flip
 	spellbook[spellID].SetDataID(spellID);
 }
 
+//Damages player by dmgAmount
 int GameController::Hurt(int damage)
 {
 	health -= damage;
 	return damage;
 }
 
+//Gets value of mana, sets value of mana, cant go above max mana
 int GameController::GetMana()
 {
 	return mana;

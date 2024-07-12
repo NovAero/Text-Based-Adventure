@@ -44,6 +44,8 @@ public:
 
 	int Heal(int healAmt);
 
+	void Map();
+
 	void Use(int itemID);
 	void Interact(String& name, Room& currentRoom);
 
