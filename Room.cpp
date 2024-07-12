@@ -162,7 +162,7 @@ void Room::Description(int roomX, int roomY, bool LOrbActive)
 		descToSeek -= 14;
 	}
 
-	if (LOrbActive == true) {
+	if (roomX == 2 && roomY == 0 && LOrbActive == true) {
 		descToSeek = 9;
 	}
 

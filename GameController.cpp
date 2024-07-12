@@ -77,10 +77,10 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 		RunGame(pos[0], pos[1], false);
 
 	} 
-	else if ((commandIndex = command.Find("pickup") == 0 && command.len() > 6)) {
+	else if ((commandIndex = command.Find("pickup") == 0 && command.len() > 7)) {
 		system("CLS");
 		int j = 0;
-		String temp = new char[(command.len() - 6) + 1];
+		char* temp = new char[(command.len() - 6) + 1];
 
 		for (int i = 7; i < command.len(); ++i) {
 			temp[j] = command[i];
@@ -135,15 +135,15 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 	else if (commandIndex = command.Find("cast") == 0 && command.len() > 4) {
 
 		system("CLS");
-		String temp = new char[command.len() - 4];
+		char* temp = new char[command.len() - 4 + 1];
 		int j = 0;
 
-		for (int i = 4; i < command.len(); ++i) {
+		for (int i = 5; i < command.len(); ++i) {
 			temp[j] = command[i];
 			++j;
 		}
-		if (temp[command.len() - 4] != '\0') {
-			temp[command.len() - 4] = '\0';
+		if (temp[command.len() - 5] != '\0') {
+			temp[command.len() - 5] = '\0';
 		}
 		command = temp;
 		bool hasSpell = FindSpell(command);
@@ -154,9 +154,9 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 		}
 		RunGame(pos[0], pos[1], false);
 	}
-	else if (commandIndex = command.Find("interact") == 0 && command.len() > 9 ) {
+	else if (commandIndex = command.Find("interact") == 0 && command.len() > 8 ) {
 		system("CLS");
-		String temp = new char[(command.len() - 9) + 1];
+		char* temp = new char[(command.len() - 8) + 1];
 		int j = 0;
 
 		for (int i = 9; i < command.len(); ++i) {

@@ -78,7 +78,7 @@ public:
 	bool fStoneActive = false;
 	bool levActive = false;
 	bool SwAActive = false;
-	bool LOrbActive = true;
+	bool LOrbActive = false;
 
 	bool hasRustKey = false;
 	bool hasCemKey = false;
