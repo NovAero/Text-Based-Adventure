@@ -19,7 +19,7 @@
 	Scroll swa(SCROLL_ID_SWA, false);
 	Scroll j(SCROLL_ID_J, false);
 	Scroll lo(SCROLL_ID_LO, false);
-	Scroll hs(SCROLL_ID_H, false);
+	Scroll hs(SCROLL_ID_H, true);
 
 	Door exitGates[4] = { DOOR_ID_N,DOOR_ID_E,DOOR_ID_S,DOOR_ID_W };
 

@@ -107,7 +107,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 	}
 	else if ((commandIndex = command.Find("inspect room") == 0)) {
 		system("CLS");
-		rooms[pos[0]][pos[1]].ShowContents(fStoneActive);
+		rooms[pos[0]][pos[1]].ShowContents(fStoneActive, LOrbActive);
 
 		cout << endl;
 
@@ -537,8 +537,10 @@ void GameController::PlayerActionSelector()
 		bool hasSpell = FindSpell(command);
 
 		if (hasSpell == true) {
-			Spell temp;
+
+			Spell temp(command);
 			int tempID = temp.Cast();
+
 			int dmg = 0;
 			int healAmt;
 
@@ -751,6 +753,12 @@ void GameController::Cast(String& spellName)
 
 			case 5:
 				SwAActive = true;
+				cout << "You cast " << spelltmp.NameData() << endl;
+				mana -= spelltmp.GetManaCost();
+				break;
+			case 7:
+				LOrbActive = true;
+				canPickup[19] = true;
 				cout << "You cast " << spelltmp.NameData() << endl;
 				mana -= spelltmp.GetManaCost();
 				break;

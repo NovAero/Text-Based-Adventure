@@ -20,7 +20,7 @@ public:
 	int GetX();
 	int GetY();
 
-	void ShowContents(bool fStoneActive);
+	void ShowContents(bool fStoneActive, bool LOrbActive);
 	int AnyHiddenItems();
 
 	int HasItemID(int ID);

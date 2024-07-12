@@ -78,6 +78,7 @@ public:
 	bool fStoneActive = false;
 	bool levActive = false;
 	bool SwAActive = false;
+	bool LOrbActive = false;
 
 	bool hasRustKey = false;
 	bool hasCemKey = false;
@@ -95,7 +96,7 @@ private:
 
 	//Player things
 	bool playerTurn = true;
-	bool canPickup[21] = { false,false,false,false,true,true,false,false,false,false,true,true,true ,true ,true ,true ,true ,true ,true ,true, false };
+	bool canPickup[21] = { false,false,false,false,true,true,false,false,false,false,true,true,true ,true ,true ,true ,true ,true ,true , false, false };
 
 	Object inventory[5];
 	Spell spellbook[10];

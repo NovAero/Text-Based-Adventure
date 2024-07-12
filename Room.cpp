@@ -40,31 +40,46 @@ int Room::GetY()
 	return posY;
 }
 
-void Room::ShowContents(bool fStoneActive)
+void Room::ShowContents(bool fStoneActive, bool LOrbActive)
 {
 	String contents = "In the room you can see ";
 	String find;
 	String replace;
 
-	for (Object v : itemsInRoom) {
+	if (posX == 2 && posY == 0 && LOrbActive == true) {
+		for (Object v : itemsInRoom) {
+			if (v.GetID() == -1 || v.NameObj() == "Exit Gate") {
+				continue;
+			}
+			else {
+				contents.Suffix("a ");
+				contents.Suffix(v.Name());
+				contents.Suffix(", ");
+				find = v.NameObj();
+				break;
+			}
+		}
+	} else {
+		for (Object v : itemsInRoom) {
 
-		if (v.GetID() == -1 || v.NameObj() == "Exit Gate") {
-			continue;
-		}
-		if (v.isInvisible() == true && fStoneActive == true) {
-			contents.Suffix("a ");
-			contents.Suffix(v.Name());
-			contents.Suffix(", ");
-			find = v.NameObj();
-		}
-		else if (v.isInvisible() == true && fStoneActive != true) {
-			continue;
-		}
-		else if (v.isInvisible() != true) {
-			contents.Suffix("a ");
-			contents.Suffix(v.Name());
-			contents.Suffix(", ");
-			find = v.NameObj();
+			if (v.GetID() == -1 || v.NameObj() == "Exit Gate") {
+				continue;
+			}
+			if (v.isInvisible() == true && fStoneActive == true) {
+				contents.Suffix("a ");
+				contents.Suffix(v.Name());
+				contents.Suffix(", ");
+				find = v.NameObj();
+			}
+			else if (v.isInvisible() == true && fStoneActive != true) {
+				continue;
+			}
+			else if (v.isInvisible() != true) {
+				contents.Suffix("a ");
+				contents.Suffix(v.Name());
+				contents.Suffix(", ");
+				find = v.NameObj();
+			}
 		}
 	}
 	int len = contents.len();
