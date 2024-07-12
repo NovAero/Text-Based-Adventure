@@ -170,7 +170,7 @@ void Room::Description(int roomX, int roomY)
 
 	if (descToSeek > 0){ //If iterator is 0 it doesnt need iterator, thus skips a step, otherwise keep going
 		
-		while (iterator != descToSeek-1) {
+		while (iterator != descToSeek) {
 			file.get(singleCharacter) >> noskipws;
 			if (singleCharacter == END_OF_LINE) { //if found end char (#) add to iterator
 				iterator++;
@@ -182,7 +182,7 @@ void Room::Description(int roomX, int roomY)
 
 		char temp[500]; //Makes new char[] == length of description
 		
-		while (iterator != descToSeek)	{
+		while (iterator != descToSeek+1)	{
 			file.get(singleCharacter) >> noskipws;
 			if (singleCharacter == END_OF_LINE) {
 				iterator++;

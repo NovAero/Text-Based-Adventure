@@ -67,8 +67,12 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 		command = temp;
 		commandIndex = InvHas(command);
 
-		if (commandIndex != -1) {
+		if (commandIndex == -1) {
+			cout << "You don't have that item." << endl;
+		}
+		else {
 			Use(inventory[commandIndex].GetID());
+
 		}
 		RunGame(pos[0], pos[1], false);
 
@@ -88,14 +92,17 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 		command = temp;
 		commandIndex = rooms[pos[0]][pos[1]].HasItem(command);
 
-		if (commandIndex != -1) {
+		if (commandIndex == -1) {
+			cout << "There is nothing here that fits that description." << endl;
+		}
+		else {
 			AddToInventory(rooms[pos[0]][pos[1]].GetItemAtIndex(commandIndex));
 
 			KeyChecker(rooms[pos[0]][pos[1]].GetItemAtIndex(commandIndex));
 
 			rooms[pos[0]][pos[1]].RemoveItem(rooms[pos[0]][pos[1]].GetItemAtIndex(commandIndex));
-			RunGame(pos[0], pos[1], false);
 		}
+		RunGame(pos[0], pos[1], false);
 
 	}
 	else if ((commandIndex = command.Find("inspect room") == 0)) {
