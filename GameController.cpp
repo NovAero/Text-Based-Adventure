@@ -54,7 +54,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 	} 
 	else if ((commandIndex = command.Find("use")) == 0 && command.len() > 3) {
 		system("CLS");
-		String temp = new char[command.len() - 3];
+		char* temp = new char[command.len() - 3 + 1];
 		int j = 0;
 
 		for (int i = 4; i < command.len(); ++i) {
@@ -71,8 +71,12 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 			cout << "You don't have that item." << endl;
 		}
 		else {
-			Use(inventory[commandIndex].GetID());
-			inventory[commandIndex].SetData("N/A", "Empty", -1, false);
+			if (inventory[commandIndex].GetID() == RUSTED_KEY_ID || inventory[commandIndex].GetID() == CEMETERY_KEY_ID || inventory[commandIndex].GetID() == FAERIE_KEY_ID) {
+				cout << "You can't use that item\n";
+			} else {
+				Use(inventory[commandIndex].GetID());
+				inventory[commandIndex].SetData("N/A", "Empty", -1, false);
+			}
 		}
 		RunGame(pos[0], pos[1], false);
 
