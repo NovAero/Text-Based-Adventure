@@ -156,7 +156,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 	}
 	else if (commandIndex = command.Find("interact") == 0 && command.len() > 9 ) {
 		system("CLS");
-		String temp = new char[command.len() - 9];
+		String temp = new char[(command.len() - 9) + 1];
 		int j = 0;
 
 		for (int i = 9; i < command.len(); ++i) {
