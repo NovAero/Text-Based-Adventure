@@ -78,7 +78,7 @@ public:
 
 	bool dispelMagUsed = false;
 	bool fStoneActive = false;
-	bool levActive = true;
+	bool levActive = false;
 	bool SwAActive = false;
 	bool LOrbActive = false;
 
