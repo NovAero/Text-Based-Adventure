@@ -33,7 +33,7 @@
 	Key flowerKey("Magic Flower", "An incandescent white flower", false, FAERIE_KEY_ID);
 
 	Object room00[MAX_ITEM_COUNT] = { cats[0], exitGates[1], fb};
-	Object room01[MAX_ITEM_COUNT] = { exitGates[2], ossuaryDoor, cemetaryDoor, fountain, cemeteryKey};
+	Object room01[MAX_ITEM_COUNT] = { exitGates[2], ossuaryDoor, cemetaryDoor, fountain, cemeteryKey, lo};
 	Object room02[MAX_ITEM_COUNT] = { exitGates[3], tombstone, fd };
 	Object room10[MAX_ITEM_COUNT] = { exitGates[1], swa , flowerKey, enemy };
 	Object room11[MAX_ITEM_COUNT] = { cats[1], exitGates[0], exitGates[1], exitGates[2], exitGates[3], l, faerie};

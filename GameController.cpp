@@ -195,8 +195,7 @@ void GameController::LoadRoom(Room& toLoad, bool isNewRoom)
 {
 	if (isNewRoom == true) {
 		cout << "Entering " << toLoad.Name() << "\n\n";
-		toLoad.Description(toLoad.GetX(), toLoad.GetY());
-
+		toLoad.Description(toLoad.GetX(), toLoad.GetY(), LOrbActive);
 	}
 	else {
 		cout << endl << "You are at the " << toLoad.Name() << "\n\n";

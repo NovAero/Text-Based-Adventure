@@ -151,7 +151,7 @@ const char* Room::Name()
 	return roomName.GetData();
 }
 
-void Room::Description(int roomX, int roomY)
+void Room::Description(int roomX, int roomY, bool LOrbActive)
 {
 	
 	int descToSeek = (roomX*10) + roomY; //Sets descToSeek to 10*X + Y, giving a 2 digit number
@@ -162,11 +162,15 @@ void Room::Description(int roomX, int roomY)
 		descToSeek -= 14;
 	}
 
+	if (LOrbActive == true) {
+		descToSeek = 9;
+	}
+
 	char END_OF_LINE = '#'; //End of Line char in .txt file
 	char singleCharacter; //Temp char for iteration
 	String retDesc; //string to set and return, clears up temp and new[] keyword
 
-	if (descToSeek < 0 || descToSeek > 8) { //if the seek is out of range 0-8, exits (No descriptions have been included for those)
+	if (descToSeek < 0 || descToSeek > 9) { //if the seek is out of range 0-8, exits (No descriptions have been included for those)
 		cout << "Failure: description doesnt exist, out of range";
 		return;
 	}

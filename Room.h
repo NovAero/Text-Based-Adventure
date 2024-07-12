@@ -29,7 +29,7 @@ public:
 	Object& GetItemAtIndex(int index);
 	
 	const char* Name();
-	void Description(int roomX, int roomY);
+	void Description(int roomX, int roomY, bool LOrbActive);
 
 	int FindFirstEmpty();
 
