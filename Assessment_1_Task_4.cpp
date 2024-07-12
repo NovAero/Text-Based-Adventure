@@ -5,7 +5,7 @@
 #include "GameController.h"
 #include "Object.h"
 
-	Cat cats[2];
+	Cat cats[3];
 	Enemy enemy;
 
 	Faerie faerie;
@@ -33,7 +33,7 @@
 	Key flowerKey("Magic Flower", "An incandescent white flower", false, FAERIE_KEY_ID);
 
 	Object room00[MAX_ITEM_COUNT] = { cats[0], exitGates[1], fb};
-	Object room01[MAX_ITEM_COUNT] = { exitGates[2], ossuaryDoor, cemetaryDoor, fountain, cemeteryKey, lo};
+	Object room01[MAX_ITEM_COUNT] = { cats[2], exitGates[2], ossuaryDoor, cemetaryDoor, fountain, cemeteryKey, lo};
 	Object room02[MAX_ITEM_COUNT] = { exitGates[3], tombstone, fd };
 	Object room10[MAX_ITEM_COUNT] = { exitGates[1], swa , flowerKey, enemy };
 	Object room11[MAX_ITEM_COUNT] = { cats[1], exitGates[0], exitGates[1], exitGates[2], exitGates[3], l, faerie};
@@ -45,16 +45,18 @@
 int main() {
 
 	String nameSet;
-	cout << "What is your character's name?\n";
+	cout << "Try to remember your name... \n";
 	nameSet.Input();
 
 	system("CLS");
+	
+	cout << "As your eyes struggle to open, you take in your surroundings and realise you are on a beach, all that you can remember\nis falling into the sea...\n\nAs you gather yourself, you check your belongings and find an empty spellbook, you might have been a mage?\n\n";
+	system("pause");
+	system("CLS");	
+	cout << "Type \"help\" for a list of commands\n\n";
 
 	GameController ctrl(nameSet,room00,room01,room02,room10,room11,room12,room20,room21,room22);
 	
-	cout << "As your eyes struggle to open, you take in your surroundings and realise you are on a beach, you do \nnot know who you are.\nAll that you can remember is falling into the sea...\n\nAs you gather yourself, you check your belongings and find an empty spellbook, you might have been a mage?.\n\n";
-	cout << "Type \"help\" for a list of commands\n\n";
-
 	ctrl.RunGame(2,1, true);
 }
 
