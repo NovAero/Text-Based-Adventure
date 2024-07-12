@@ -537,8 +537,8 @@ void GameController::PlayerActionSelector()
 		bool hasSpell = FindSpell(command);
 
 		if (hasSpell == true) {
-			Cast(command);
-			int tempID = spellbook->Cast();
+			Spell temp;
+			int tempID = temp.Cast();
 			int dmg = 0;
 			int healAmt;
 
@@ -585,8 +585,10 @@ void GameController::PlayerActionSelector()
 
 			default:
 				cout << "That spell does nothing here.";
+				break;
 			}
 			cout << endl;
+
 		}
 	}
 	else {
@@ -600,7 +602,7 @@ void GameController::EnemyActionSelector()
 {
 	int atkDmg = rand() % dmgClamp[1] + dmgClamp[0];
 
-	cout<< "You were hit for" << Hurt(atkDmg) << " health" << endl;
+	cout << endl << "You were hit for " << Hurt(atkDmg) << " health" << endl;
 }
 
 int GameController::Heal(int healAmt)
@@ -674,6 +676,27 @@ void GameController::Interact(String& name, Room& currentRoom)
 		else if(name == "cat" && SwAActive == true && currentRoom.AnyHiddenItems() <= 0) {
 			cout << "There are no invisible items in this room, meow~" << endl;
 		}
+		else if (name == "faerie" && hasFaerieKey == false) {
+			cout << "Hello stranger, if you would be so kind as to retrieve the magical flower from those goblins in the forest\nI would be eternally grateful, and I have a little gift for you in return!" << endl;
+		}
+		else if (name == "faerie" && hasFaerieKey == true) {
+			cout << "Oh thank you so much for bringing me this flower! Here, as a token of my gratitude, the secrets of the\nFaerie stones." << endl << endl;
+			GiveSpellAccess(4);
+			cout << "You learnt the secrets of how to cast \"Faerie's Stone\"" << endl;
+		}
+		else if (name == "mana fountain") {
+			if (mana < maxMana && manaFtnUses > 0) {
+				cout << "You drink from the fountain and feel energy rush through you, restoring your mana to full!" << endl;
+				SetMana(maxMana);
+				manaFtnUses--;
+			}
+			else if (mana < maxMana && manaFtnUses == 0) {
+				cout << "The fountain has run dry." << endl;
+			}
+			else {
+				cout << "You are already full of mana!" << endl;
+			}
+		}
 		else {
 			Object& toInteract = currentRoom.GetItemAtIndex(itemIndex);
 			itemIndex = toInteract.GetID();
@@ -711,25 +734,25 @@ void GameController::Cast(String& spellName)
 			case 0:
 				dispelMagUsed = true;
 				cout << "You cast " << spelltmp.NameData() << endl;
-				SetMana(spelltmp.GetManaCost());
+				mana -= spelltmp.GetManaCost();
 				break;
 
 			case 1:
 				levActive = true;
 				cout << "You cast " << spelltmp.NameData() << endl;
-				SetMana(spelltmp.GetManaCost());
+				mana -= spelltmp.GetManaCost();
 				break;
 
 			case 4:
 				fStoneActive = true;
 				cout << "You cast " << spelltmp.NameData() << endl;
-				SetMana(spelltmp.GetManaCost());
+				mana -= spelltmp.GetManaCost();
 				break;
 
 			case 5:
 				SwAActive = true;
 				cout << "You cast " << spelltmp.NameData() << endl;
-				SetMana(spelltmp.GetManaCost());
+				mana -= spelltmp.GetManaCost();
 				break;
 			case 9:
 				if (health = maxHealth) {
@@ -738,7 +761,7 @@ void GameController::Cast(String& spellName)
 				else {
 					Heal(healAmt);
 					cout << "You cast " << spelltmp.NameData() << " and heal for " << healAmt << " health!" << endl;
-					SetMana(spelltmp.GetManaCost());
+					mana -= spelltmp.GetManaCost();
 					break;
 				}
 			default:

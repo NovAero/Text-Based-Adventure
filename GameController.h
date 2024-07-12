@@ -8,6 +8,7 @@
 #include "Scroll.h"
 #include "Door.h"
 #include "Key.h"
+#include "Faerie.h"
 
 class GameController
 {
@@ -89,6 +90,8 @@ private:
 	String command;
 
 	Room rooms[3][3];
+
+	int manaFtnUses = 3;
 
 	//Player things
 	bool playerTurn = true;

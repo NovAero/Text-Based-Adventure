@@ -22,7 +22,6 @@ private:
 	String name;
 	String desc;
 
-	int uses = 3;
 
 	int itemID = MANAFTN_ID;
 

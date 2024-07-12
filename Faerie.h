@@ -26,5 +26,7 @@ private:
 
     bool invisible;
 
+    int itemID = FAERIE_ID;
+
 };
 

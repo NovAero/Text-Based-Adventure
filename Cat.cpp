@@ -32,6 +32,6 @@ void Cat::Interact()
 
 void Cat::Pet()
 {
-	cout << "You pet the cat, it is purring!") << endl;
+	cout << "You pet the cat, it is purring!" << endl;
 	purring = true;
 }

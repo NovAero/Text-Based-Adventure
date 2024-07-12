@@ -22,7 +22,7 @@ public:
 	void SetData(String& name, String& description, int ID, bool isInvis);
 	void SetData(const char* name, const char* description, int ID, bool isInvis);
 	void SetID(int ID);
-	
+
 	virtual int GetID();
 	bool CanPickup();
 

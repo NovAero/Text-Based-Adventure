@@ -4,9 +4,6 @@ ManaFtn::ManaFtn() : Object("Mana Fountain", "A glistening pedestal with a bowl 
 {
 	name = Object::Name();
 	desc = Object::Description();
-	
-	uses = 3;
-
 }
 
 ManaFtn::~ManaFtn()
@@ -27,3 +24,4 @@ const char* ManaFtn::Description()
 {
 	return desc.GetData();
 }
+
