@@ -4,7 +4,7 @@ GameController::GameController(String& player, Object* room00, Object* room01, O
 {
 	GenerateRooms(room00,room01,room02,room10,room11,room12,room20,room21,room22);
 
-	name = player;
+	name = player.GetData();
 }
 
 GameController::~GameController()

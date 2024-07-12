@@ -177,44 +177,31 @@ void Room::Description(int roomX, int roomY)
 			}
 			else {
 				charsDeep++;
-				length++;
 			}
 		}
 
+		char temp[500]; //Makes new char[] == length of description
+		
 		while (iterator != descToSeek)	{
 			file.get(singleCharacter) >> noskipws;
 			if (singleCharacter == END_OF_LINE) {
 				iterator++;
 			}
 			else {
+				temp[length] = singleCharacter;
 				length++;
-			}
-		}
-
-		retDesc = new char[length + 1 ]; //Makes new char[] == length of description
-		iterator = 0;
-
-		while (charsDeep < length) //Sets contents of temp until end of Description
-		{
-			file.get(singleCharacter) >> noskipws;
-
-			if (singleCharacter != END_OF_LINE) {
-				retDesc[iterator] = singleCharacter;
-				cout << retDesc[iterator];
-				iterator++;
-			}
-			else {
-				break;
 			}
 		}
 
 		file.close(); //close file !!!
 
-		if (retDesc[length] != '\0') { //Check for null terminator, adds if it doesnt exist
-			retDesc[length] = '\0';
+		if (temp[length] != '\0') { //Check for null terminator, adds if it doesnt exist
+			temp[length] = '\0';
 		}
 
-		retDesc.Print('n');//Prints the contents to the console with a \n
+		retDesc.SetData(temp);
+
+		cout << retDesc.GetData(); //Prints the contents to the console with a \n
 		cout << "\n\n";
 		
 	}
