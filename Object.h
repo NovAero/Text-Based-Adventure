@@ -41,7 +41,6 @@ private:
 	String name;
 	String desc;
 
-	bool canPickup = true;
 	bool invisible = false;
 
 	int itemID = -1;

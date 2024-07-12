@@ -6,9 +6,19 @@
 #include "Object.h"
 
 	Cat cats[2];
-	Enemy enemies[5];
+	Enemy enemy;
 	ManaFtn fountain;
-	Scroll scrolls[10] = {SCROLL_ID_DM,SCROLL_ID_L,SCROLL_ID_FB,SCROLL_ID_FD,SCROLL_ID_FS,SCROLL_ID_SWA,SCROLL_ID_J,SCROLL_ID_LO,SCROLL_ID_MM,SCROLL_ID_H};
+
+	Scroll dm(SCROLL_ID_DM, false);
+	Scroll l(SCROLL_ID_L, true);
+	Scroll fb(SCROLL_ID_FB, true);
+	Scroll fd(SCROLL_ID_FD, false);
+	Scroll fs(SCROLL_ID_FS, false);
+	Scroll swa(SCROLL_ID_SWA, false);
+	Scroll j(SCROLL_ID_J, false);
+	Scroll lo(SCROLL_ID_LO, false);
+	Scroll hs(SCROLL_ID_H, false);
+
 	Door exitGates[4] = { DOOR_ID_N,DOOR_ID_E,DOOR_ID_S,DOOR_ID_W };
 
 	Door boatDoor(DOOR_ID_W, "Boat Shed Door", "Run down wooden double doors, locked.");
@@ -18,14 +28,15 @@
 
 	Key rustedKey("Rusted Key", "A rusty key with a handle shaped like a boat", false, RUSTED_KEY_ID);
 	Key cemeteryKey("Cemetery Key", "A glittering silver key", true, CEMETERY_KEY_ID);
+	Key flowerKey("Magic Flower", "An incandescent white flower", false, FAERIE_KEY_ID);
 
-	Object room00[MAX_ITEM_COUNT] = { cats[0], exitGates[1], scrolls[2]};
-	Object room01[MAX_ITEM_COUNT] = { exitGates[2], ossuaryDoor, cemetaryDoor, fountain, cemeteryKey, scrolls[7]};
-	Object room02[MAX_ITEM_COUNT] = { exitGates[3], tombstone, scrolls[3] };
-	Object room10[MAX_ITEM_COUNT] = { exitGates[1], scrolls[5] };
-	Object room11[MAX_ITEM_COUNT] = { cats[1], exitGates[0], exitGates[1], exitGates[2], exitGates[3]};
-	Object room12[MAX_ITEM_COUNT] = { exitGates[3], scrolls[0], scrolls[6] };
-	Object room20[MAX_ITEM_COUNT] = { exitGates[1], scrolls[9] };
+	Object room00[MAX_ITEM_COUNT] = { cats[0], exitGates[1], };
+	Object room01[MAX_ITEM_COUNT] = { exitGates[2], ossuaryDoor, cemetaryDoor, fountain, cemeteryKey};
+	Object room02[MAX_ITEM_COUNT] = { exitGates[3], tombstone, fd };
+	Object room10[MAX_ITEM_COUNT] = { exitGates[1], swa , flowerKey, enemy };
+	Object room11[MAX_ITEM_COUNT] = { cats[1], exitGates[0], exitGates[1], exitGates[2], exitGates[3], fs, l};
+	Object room12[MAX_ITEM_COUNT] = { exitGates[3], dm, j };
+	Object room20[MAX_ITEM_COUNT] = { exitGates[1], hs };
 	Object room21[MAX_ITEM_COUNT] = { boatDoor, exitGates[0], exitGates[1]};
 	Object room22[MAX_ITEM_COUNT] = { exitGates[3] , rustedKey };
 	

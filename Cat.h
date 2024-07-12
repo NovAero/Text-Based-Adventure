@@ -15,7 +15,7 @@ public:
 	const char* Name() override;
 	const char* Description() override;
 
-	const char* Interact(bool SwAisActive, int numOfHidden);
+	void Interact() override;
 
 	void Pet();
 
@@ -27,8 +27,6 @@ private:
 
 	String name;
 	String desc;
-
-	String converse;
 
 	int itemID = CAT_ID;
 

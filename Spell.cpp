@@ -284,3 +284,8 @@ void Spell::SetDataName(String& find)
 		break;
 	}
 }
+
+int Spell::Cast()
+{
+	return spellID;
+}

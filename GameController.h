@@ -9,10 +9,6 @@
 #include "Door.h"
 #include "Key.h"
 
-
-#define FAERIE_ID 4
-
-
 class GameController
 {
 public:
@@ -29,8 +25,6 @@ public:
 
 	void GenerateRooms(Object* room00, Object* room01, Object* room02, Object* room10, Object* room11, Object* room12, Object* room20, Object* room21, Object* room22);
 
-	void LoadCombat();
-
 	void MHandlerNorth(int X, int Y);
 	void MHandlerEast(int X, int Y, bool hasCemKey, bool levActive);
 	void MHandlerSouth(int X, int Y);
@@ -40,10 +34,14 @@ public:
 	
 	void KeyChecker(Object& obj);
 
+	void LoadCombat();
 
 	//player funcs
 
-	void Attack();
+	void PlayerActionSelector();
+	void EnemyActionSelector();
+
+	int Heal(int healAmt);
 
 	void Use(int itemID);
 	void Interact(String& name, Room& currentRoom);
@@ -68,7 +66,7 @@ public:
 
 	void GiveSpellAccess(int spellID);
 
-	void Hurt(int damage);
+	int Hurt(int damage);
 
 	int GetMana();
 	void SetMana(int mana);
@@ -76,12 +74,13 @@ public:
 public:
 
 	bool dispelMagUsed = false;
-
 	bool fStoneActive = false;
 	bool levActive = false;
 	bool SwAActive = false;
+
 	bool hasRustKey = false;
 	bool hasCemKey = false;
+	bool hasFaerieKey = false;
 
 private:
 
@@ -91,7 +90,9 @@ private:
 
 	Room rooms[3][3];
 
-	bool canPickup[20] = { false,false,false,false,true,true,false,false,false,false,true,true,true ,true ,true ,true ,true ,true ,true ,true };
+	//Player things
+	bool playerTurn = true;
+	bool canPickup[21] = { false,false,false,false,true,true,false,false,false,false,true,true,true ,true ,true ,true ,true ,true ,true ,true, false };
 
 	Object inventory[5];
 	Spell spellbook[10];
@@ -101,5 +102,9 @@ private:
 
 	int mana = 15;
 	const int maxMana = 15;
+	
+	//Enemy things
+	int eHealth = 30;
+	int dmgClamp[2] = { 1,8 };
 
 };

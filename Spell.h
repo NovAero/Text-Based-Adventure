@@ -49,6 +49,8 @@ public:
 	//Sets the data by a String 
 	void SetDataName(String& name); 
 
+	int Cast();
+
 private:
 
 	String name;

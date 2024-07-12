@@ -72,7 +72,7 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 		}
 		else {
 			Use(inventory[commandIndex].GetID());
-
+			inventory[commandIndex].SetData("N/A", "Empty", -1, false);
 		}
 		RunGame(pos[0], pos[1], false);
 
@@ -172,6 +172,17 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 		Interact(command, rooms[pos[0]][pos[1]]);
 
 		RunGame(pos[0], pos[1], false);
+	}
+	else if (commandIndex = command.Find("attack") == 0) {
+		if (rooms[pos[0]][pos[1]].HasItemID(ENEMY_ID)) {
+			system("CLS");
+			LoadCombat();
+
+		}
+		else {
+			cout << "There is nothing to fight here" << endl;
+		}
+
 	}
 	else {
 		system("CLS");
@@ -448,12 +459,158 @@ void GameController::KeyChecker(Object& obj)
 	}
 	if (obj.GetID() == CEMETERY_KEY_ID) {
 		hasCemKey = true;
+	} 
+	if (obj.GetID() == FAERIE_KEY_ID) {
+		hasFaerieKey = true;
+	}
+}
+
+void GameController::LoadCombat()
+{
+	cout << "You approach the two goblins and start a fight!!" << endl;
+
+	bool winState = false;
+
+	//Game Loop
+	while (winState == false) {
+		if (playerTurn) {
+
+			if (health > 0) {
+				playerTurn = false;
+				PlayerActionSelector();
+
+			}
+			else if (health <= 0) {
+				break;
+			}
+
+		}
+		else if (!playerTurn) {
+			if (eHealth > 0) {
+				playerTurn = true;
+				EnemyActionSelector();
+			}
+			else if (eHealth <= 0) {
+				winState = true;
+				break;
+			}
+		}
+	}
+	if (!winState) {
+		cout << "You defeat the goblins and can now collect the flower!\n";
+		canPickup[FAERIE_KEY_ID] = true;
+		LoadRoom(2,0,false);
+	}
+	else if (winState) {
+		cout << "You Died\n";
+		system("pause");
 	}
 }
 
 
 //PLAYER FUNCTIONS
 
+
+void GameController::PlayerActionSelector()
+{
+
+	String command;
+	int commandIndex = 0;
+
+	cout << "||Health: " << health << "||\t" << "||Enemy Health: " << eHealth << "\nEnemy is readying attack!\n";
+	command.Input();
+
+	if (commandIndex = command.Find("cast") == 0 && command.len() > 4) {
+
+		system("CLS");
+		String temp = new char[command.len() - 4];
+		int j = 0;
+
+		for (int i = 4; i < command.len(); ++i) {
+			temp[j] = command[i];
+			++j;
+		}
+		if (temp[command.len() - 4] != '\0') {
+			temp[command.len() - 4] = '\0';
+		}
+		command = temp;
+		bool hasSpell = FindSpell(command);
+
+		if (hasSpell == true) {
+			Cast(command);
+			int tempID = spellbook->Cast();
+			int dmg = 0;
+			int healAmt;
+
+			switch (tempID) {
+			case 2:
+				dmg = rand() & spellbook[2].GetMaxDmg() + spellbook[2].GetMinDmg();
+				cout << "You deal " << dmg << " damage";
+
+				eHealth -= dmg;
+
+				break;
+
+			case 3:
+				dmg = rand() & spellbook[3].GetMaxDmg() + spellbook[3].GetMinDmg();
+				cout << "You deal " << dmg << " damage";
+
+				eHealth -= dmg;
+
+				break;
+
+			case 6:
+				dmg = rand() & spellbook[6].GetMaxDmg() + spellbook[6].GetMinDmg();
+				cout << "You deal " << dmg << " damage";
+
+				eHealth -= dmg;
+
+				break;
+
+			case 8:
+				
+				dmg = rand() & spellbook[8].GetMaxDmg() + spellbook[8].GetMinDmg();
+				cout << "You deal " << dmg << " damage";
+
+				eHealth -= dmg;
+
+				break;
+
+			case 9:
+
+				healAmt = rand() & 10 + 1;
+				cout << "You heal for " << healAmt << " health";
+				Heal(healAmt);
+				break;
+
+			default:
+				cout << "That spell does nothing here.";
+			}
+			cout << endl;
+		}
+	}
+	else {
+		system("CLS");
+		cout << "Choose a valid action\n";
+		PlayerActionSelector();
+	}
+}
+
+void GameController::EnemyActionSelector()
+{
+	int atkDmg = rand() % dmgClamp[1] + dmgClamp[0];
+
+	cout<< "You were hit for" << Hurt(atkDmg) << " health" << endl;
+}
+
+int GameController::Heal(int healAmt)
+{
+	health += healAmt;
+	if (health >= maxHealth) {
+		health = maxHealth;
+	}
+	return healAmt;
+}
 
 void GameController::Use(int itemID)
 {
@@ -508,18 +665,21 @@ void GameController::Use(int itemID)
 
 void GameController::Interact(String& name, Room& currentRoom)
 {
-	if (name == "cat" && currentRoom.GetItemAtIndex(0).GetID() == CAT_ID) {
-		Cat cat;
-		cat.Interact(SwAActive, currentRoom.AnyHiddenItems());
-	}
 	int itemIndex = currentRoom.HasItem(name);
 
 	if (itemIndex != -1) {
-	
-		Object& toInteract = currentRoom.GetItemAtIndex(itemIndex);
-		itemIndex = toInteract.GetID();
+		if(name == "cat" && SwAActive == true && currentRoom.AnyHiddenItems() > -1) {
+			cout << "There are " << currentRoom.AnyHiddenItems() << " invisible items in this room, meow~" << endl;
+		}
+		else if(name == "cat" && SwAActive == true && currentRoom.AnyHiddenItems() <= 0) {
+			cout << "There are no invisible items in this room, meow~" << endl;
+		}
+		else {
+			Object& toInteract = currentRoom.GetItemAtIndex(itemIndex);
+			itemIndex = toInteract.GetID();
 
-		toInteract.Interact();
+			toInteract.Interact();
+		}
 	}
 	else {
 		cout << "You talk to yourself, weirdo..." << endl;
@@ -543,14 +703,53 @@ void GameController::Cast(String& spellName)
 		Spell spelltmp = spellName;
 
 		if (mana >= spelltmp.GetManaCost()) {
-			cout << "You cast " << spelltmp.NameData();
+
+			int castID = spelltmp.Cast();
+			int healAmt = rand() % 10 + 1;
+
+			switch (castID) {
+			case 0:
+				dispelMagUsed = true;
+				cout << "You cast " << spelltmp.NameData() << endl;
+				SetMana(spelltmp.GetManaCost());
+				break;
+
+			case 1:
+				levActive = true;
+				cout << "You cast " << spelltmp.NameData() << endl;
+				SetMana(spelltmp.GetManaCost());
+				break;
+
+			case 4:
+				fStoneActive = true;
+				cout << "You cast " << spelltmp.NameData() << endl;
+				SetMana(spelltmp.GetManaCost());
+				break;
+
+			case 5:
+				SwAActive = true;
+				cout << "You cast " << spelltmp.NameData() << endl;
+				SetMana(spelltmp.GetManaCost());
+				break;
+			case 9:
+				if (health = maxHealth) {
+					cout << "You are at full health!" << endl;
+				}
+				else {
+					Heal(healAmt);
+					cout << "You cast " << spelltmp.NameData() << " and heal for " << healAmt << " health!" << endl;
+					SetMana(spelltmp.GetManaCost());
+					break;
+				}
+			default:
+				cout << "That spell does nothing here.";
+			}
 			return;
 		}
 		else {
 			cout << "Not enough mana";
 			return;
 		}
-
 	}
 	//Else, you dont know/ it doesn't exist
 	cout << "You don't know that spell";
@@ -565,12 +764,13 @@ void GameController::Cast(const char* spellName)
 void GameController::DisplayInventory()
 {
 	int s = 1;
+	cout << "[Mana: " << mana << "] [Health :" << health << "]" << endl;
 	for (Object i : inventory) {
 		if (i.GetID() != -1) {
 			cout << "Slot " << s << " " << i.Name() << " Description " << i.Description() << endl;
 		}
 		else {
-			cout << "Slot " << s << "Empty" << endl;
+			cout << "Slot " << s << " Empty" << endl;
 		}
 		s++;
 	}
@@ -607,13 +807,12 @@ int GameController::FindFirstEmpty()
 void GameController::AddToInventory(Object& toAdd)
 {
 	int first = FindFirstEmpty();
-	int s = 1;
 
 	if (first != -1) {
 		if (toAdd.GetID() != -1 && canPickup[toAdd.GetID()] == true) {
 			if (InvHasCopy(toAdd) == false) {
 				inventory[first].CopyData(toAdd);
-				cout << "Added " << toAdd.Name() << " to inventory slot " << s << endl;
+				cout << "Added " << toAdd.Name() << " to inventory slot " << first+1 << endl;
 				return;
 			}
 			else if (InvHasCopy(toAdd) == true) {
@@ -623,7 +822,6 @@ void GameController::AddToInventory(Object& toAdd)
 			else {
 				cout << "You cannot pick that up" << endl;
 			}
-			s++;
 		}
 	}
 	else {
@@ -652,7 +850,6 @@ int GameController::InvHas(int ID)
 	}
 	return -1;
 }
-
 int GameController::InvHas(String& itemName)
 {
 	int i = 0;
@@ -714,16 +911,16 @@ void GameController::GiveSpellAccess(int spellID)
 	spellbook[spellID].SetDataID(spellID);
 }
 
-void GameController::Hurt(int damage)
+int GameController::Hurt(int damage)
 {
 	health -= damage;
+	return damage;
 }
 
 int GameController::GetMana()
 {
 	return mana;
 }
-
 void GameController::SetMana(int mana)
 {
 	this->mana = mana;

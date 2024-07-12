@@ -23,6 +23,7 @@
     <ClCompile Include="Cat.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Faerie.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="ManaFtn.cpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="Cat.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Faerie.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="ManaFtn.h" />

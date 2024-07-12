@@ -1,6 +1,8 @@
 #pragma once
 #include "Object.h"
 
+
+#define FAERIE_KEY_ID 4
 #define RUSTED_KEY_ID 5
 #define CEMETERY_KEY_ID 6
 
@@ -21,7 +23,6 @@ private:
 	String name;
 	String desc;
 	
-	bool canPickup = true;
 	bool invisible = false;
 
 	int itemID = -1;

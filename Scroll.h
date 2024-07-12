@@ -18,7 +18,7 @@ class Scroll :
 {
 public:
 
-    Scroll(int SpellID);
+    Scroll(int SpellID, bool isInvisible);
     ~Scroll();
 
 public:

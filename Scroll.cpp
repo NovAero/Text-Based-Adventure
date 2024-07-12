@@ -1,11 +1,13 @@
 #include "Scroll.h"
 
-Scroll::Scroll(int ScrollID) : Object(ScrollID, invisible)
+Scroll::Scroll(int ScrollID, bool isInvisible) : Object(ScrollID, isInvisible)
 {
 	spell.SetDataID(ScrollID-11);
 
 	name = Object::Name();
 	desc = Object::Description();
+
+	this->invisible = isInvisible;
 }
 
 Scroll::~Scroll()
