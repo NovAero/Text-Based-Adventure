@@ -95,9 +95,9 @@ private:
 	int manaFtnUses = 3;
 
 	//Player things
-	bool playerTurn = true;
-	bool canPickup[21] = { false,false,false,false,true,true,false,false,false,false,true,true,true ,true ,true ,true ,true ,true ,true , false, false };
-
+	bool playerTurn = true; //0   1      2		3	4	  5     6    7      8      9   10     11   12     13    14    15    16   17    18      19     20
+	bool canPickup[21] = { false,false,false,false,true,false,false,false,false,false,true,false,false ,true ,true ,true ,true ,true ,true , false, false };
+						//ID: 1    2    3      4     5    6     7    8     9      10    11   12    13    14    15    16    17    18   19      20      21
 	Object inventory[5];
 	Spell spellbook[10];
 

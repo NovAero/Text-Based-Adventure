@@ -12,6 +12,7 @@ to the east is a small library, and directly north is a magnificent cathedral.#A
 You walk further in and there is a shelf of scrolls, only two of which are in a language you can understand. Their tags
 read "Dispel Magic" and "Jolt". On the counter is a thick book whose cover reads "World history". As you look around,
 you also notice there is nobody else inside...#After opening the door with the rusted key, you look around the dark boat shed, you can't see much other than a table,
-it's a bit too dark to make out anything clearly.#A very empty coast with nothing but sand. There are rockpools to the east and what seems to be a Boat Shed to the west.#You come up to some rock pools, each with some tiny fish and a crab or two which quickly scurry away, in one pool you
+it's a bit too dark to make out anything clearly.#A very empty coast with nothing but sand and a single scroll. There are rockpools to the east and what seems
+to be a Boat Shed to the west.#You come up to some rock pools, each with some tiny fish and a crab or two which quickly scurry away, in one pool you
 notice a rusted key which seems to have a handle shaped like a boat.#After opening the door with the rusted key, you look around the boat shed, now lit up by your radiant orb
 and notice a scroll on the table.#

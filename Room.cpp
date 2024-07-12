@@ -45,7 +45,14 @@ void Room::ShowContents(bool fStoneActive, bool LOrbActive)
 	String contents = "In the room you can see ";
 	String find;
 	String replace;
+	
+	int firstE = FindFirstEmpty();
+	int numDoor = NumOfDoors();
 
+	if (firstE - numDoor == 0) {
+		cout << contents.GetData() << "nothing.";
+		return;
+	}
 	if (posX == 2 && posY == 0 && LOrbActive == true) {
 		for (Object v : itemsInRoom) {
 			if (v.GetID() == -1 || v.NameObj() == "Exit Gate") {
@@ -59,7 +66,12 @@ void Room::ShowContents(bool fStoneActive, bool LOrbActive)
 				break;
 			}
 		}
-	} else {
+	}
+	else if (posX == 2 && posY == 0 && LOrbActive == false) {
+		cout << "It's too dark, you can't see anything" << endl;
+		return;
+	}
+	else {
 		for (Object v : itemsInRoom) {
 
 			if (v.GetID() == -1 || v.NameObj() == "Exit Gate") {
@@ -275,6 +287,20 @@ int Room::FindFirstEmpty()
 	return -1;
 }
 
+int Room::NumOfDoors()
+{
+	int k = 0;
+
+	for (Object& i : itemsInRoom) {
+
+		if (i.GetID() >= 7 && i.GetID() <= 10 ) {
+			k++;
+
+		}
+	}
+	return k;
+}
+
 void Room::AppendItem(Object& obj)
 {
 	if (FindFirstEmpty() != -1) {
@@ -284,11 +310,11 @@ void Room::AppendItem(Object& obj)
 	cout << "No Empty Slots";
 }
 
-void Room::RemoveItem(Object& obj)
+void Room::RemoveItem(int objID)
 {
 	for (Object& i : itemsInRoom) {
 
-		if (i.GetID() == obj.GetID()) {
+		if (i.GetID() == objID) {
 			i.SetData("N/A", "Empty", -1, false);
 			return;
 		}

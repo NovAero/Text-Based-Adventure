@@ -103,8 +103,14 @@ void GameController::RunGame(int roomX, int roomY, bool isNewRoom)
 			AddToInventory(rooms[pos[0]][pos[1]].GetItemAtIndex(commandIndex));
 
 			KeyChecker(rooms[pos[0]][pos[1]].GetItemAtIndex(commandIndex));
+			if (InvHas(command) != -1) {
 
-			rooms[pos[0]][pos[1]].RemoveItem(rooms[pos[0]][pos[1]].GetItemAtIndex(commandIndex));
+				int idToRemove = rooms[pos[0]][pos[1]].GetItemAtIndex(commandIndex).GetID();
+
+				Room& currentRoom = rooms[roomX][roomY];
+
+				currentRoom.RemoveItem(idToRemove);
+			}
 		}
 		RunGame(pos[0], pos[1], false);
 
@@ -750,6 +756,9 @@ void GameController::Cast(String& spellName)
 
 			case 4:
 				fStoneActive = true;
+				canPickup[12] = true;
+				canPickup[11] = true;
+				canPickup[5] = true;
 				cout << "You cast " << spelltmp.NameData() << endl;
 				mana -= spelltmp.GetManaCost();
 				break;
@@ -843,7 +852,7 @@ void GameController::AddToInventory(Object& toAdd)
 	int first = FindFirstEmpty();
 
 	if (first != -1) {
-		if (toAdd.GetID() != -1 && canPickup[toAdd.GetID()] == true) {
+		if (toAdd.GetID() != -1 && canPickup[toAdd.GetID()-1] == true) {
 			if (InvHasCopy(toAdd) == false) {
 				inventory[first].CopyData(toAdd);
 				cout << "Added " << toAdd.Name() << " to inventory slot " << first+1 << endl;

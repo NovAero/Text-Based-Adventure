@@ -32,9 +32,10 @@ public:
 	void Description(int roomX, int roomY, bool LOrbActive);
 
 	int FindFirstEmpty();
+	int NumOfDoors();
 
 	void AppendItem(Object& obj);
-	void RemoveItem(Object& obj);
+	void RemoveItem(int objID);
 
 	void SetContents(Object* items);
 	void SetName(const char* name);

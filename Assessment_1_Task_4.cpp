@@ -19,7 +19,8 @@
 	Scroll swa(SCROLL_ID_SWA, false);
 	Scroll j(SCROLL_ID_J, false);
 	Scroll lo(SCROLL_ID_LO, false);
-	Scroll hs(SCROLL_ID_H, true);
+	Scroll Mm(SCROLL_ID_MM, false);
+	Scroll hs(SCROLL_ID_H, false);
 
 	Door exitGates[4] = { DOOR_ID_N,DOOR_ID_E,DOOR_ID_S,DOOR_ID_W };
 
@@ -39,7 +40,7 @@
 	Object room11[MAX_ITEM_COUNT] = { cats[1], exitGates[0], exitGates[1], exitGates[2], exitGates[3], l, faerie};
 	Object room12[MAX_ITEM_COUNT] = { exitGates[3], dm, j };
 	Object room20[MAX_ITEM_COUNT] = { exitGates[1], hs };
-	Object room21[MAX_ITEM_COUNT] = { boatDoor, exitGates[0], exitGates[1]};
+	Object room21[MAX_ITEM_COUNT] = { exitGates[0], exitGates[1],boatDoor, Mm };
 	Object room22[MAX_ITEM_COUNT] = { exitGates[3] , rustedKey };
 	
 int main() {
@@ -57,7 +58,7 @@ int main() {
 
 	GameController ctrl(nameSet,room00,room01,room02,room10,room11,room12,room20,room21,room22);
 	
-	ctrl.RunGame(2,1, true);
+	ctrl.RunGame(2,1	, true);
 }
 
 
