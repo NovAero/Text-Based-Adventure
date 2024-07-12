@@ -36,15 +36,15 @@ Key cemeteryKey("Cemetery Key", "A glittering silver key", true, CEMETERY_KEY_ID
 Key flowerKey("Magic Flower", "An incandescent white flower", false, FAERIE_KEY_ID);
 
 //All rooms contents
-Object room00[MAX_ITEM_COUNT] = { cats[0], exitGates[1], fb};
-Object room01[MAX_ITEM_COUNT] = { cats[2], exitGates[2], ossuaryDoor, cemetaryDoor, fountain, cemeteryKey, lo};
+Object room00[MAX_ITEM_COUNT] = { exitGates[1], cats[0], fb };
+Object room01[MAX_ITEM_COUNT] = { exitGates[2], ossuaryDoor, cemetaryDoor, cats[2], fountain, cemeteryKey, lo};
 Object room02[MAX_ITEM_COUNT] = { exitGates[3], tombstone, fd };
 Object room10[MAX_ITEM_COUNT] = { exitGates[1], swa , flowerKey, enemy };
-Object room11[MAX_ITEM_COUNT] = { cats[1], exitGates[0], exitGates[1], exitGates[2], exitGates[3], l, faerie};
+Object room11[MAX_ITEM_COUNT] = { exitGates[0], exitGates[1], exitGates[2], exitGates[3], cats[1], l, faerie};
 Object room12[MAX_ITEM_COUNT] = { exitGates[3], dm, j };
 Object room20[MAX_ITEM_COUNT] = { exitGates[1], hs };
 Object room21[MAX_ITEM_COUNT] = { exitGates[0], exitGates[1],boatDoor, Mm };
-Object room22[MAX_ITEM_COUNT] = { exitGates[3] , rustedKey };
+Object room22[MAX_ITEM_COUNT] = { exitGates[3], rustedKey };
 	
 int main() {
 

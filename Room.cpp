@@ -243,36 +243,22 @@ void Room::Description(int roomX, int roomY, bool LOrbActive)
 	}
 	else { //Does same as above, just skips Step 1: find how deep, since it's starting at the 0 index of file
 		
-		file.get(singleCharacter) >> noskipws;
-		while (singleCharacter != END_OF_LINE) {
-			file.get(singleCharacter) >> noskipws;
-			length++;
-		}
+		char singleCharacter = 0;
+		char temp[5];
 
-		retDesc = new char[length + 1]; //Makes new char[] == length of description
-		file.seekg(0);
-		charsDeep = 0; //Sets charsDeep back to 0 again, to iterate over temp[] to set it's contents
+		int i = 0;
 
-		while (charsDeep < length) //Sets contents of temp until end of Description
+		while (singleCharacter != '#') //while char isn't #, keeps printing
 		{
 			file.get(singleCharacter) >> noskipws;
-
-			if (singleCharacter != END_OF_LINE) {
-				retDesc[charsDeep] = singleCharacter;
-				cout << retDesc[charsDeep];
-				charsDeep++;
-			}
-			else {
+			if (singleCharacter == '#') {
 				break;
 			}
+			temp[0] = singleCharacter;
+			cout << temp;
 		}
 
 		file.close(); //close file !!!
-		length = retDesc.unsafeLen();
-
-		if (retDesc[length] != '\0') { //Check for null terminator, adds if it doesnt exist
-			retDesc[length] = '\0';
-		}
 
 		retDesc.Print('n'); //returns the contents of retDesc, which is then deleted when out of funtion YAY no memory leaks!!! (hopefully)
 		cout << "\n\n";
