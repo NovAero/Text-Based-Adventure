@@ -60,5 +60,5 @@ int main() {
 	GameController ctrl(nameSet,room00,room01,room02,room10,room11,room12,room20,room21,room22);
 	
 	//Runs game
-	ctrl.RunGame(2,1, true);
+	ctrl.RunGame(0,2, true);
 }

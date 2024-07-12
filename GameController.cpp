@@ -279,7 +279,6 @@ void GameController::MHandlerEast(int X, int Y,bool hasCemKey, bool levActive)
 	try {
 		if (rooms[X][Y].Name() == rooms[0][2].Name() && levActive == true) { //player is levitating and at 0,2
 			EndGameHandler();
-			system("pause");
 		}
 		else if (rooms[X][Y].Name() == rooms[0][2].Name() && levActive == false) { //player not leveitating at 0,2
 			throw(rooms[X][Y].Name());
@@ -411,48 +410,12 @@ void GameController::MHandlerWest(int X, int Y, bool hasBoatKey, bool dispelMagU
 void GameController::EndGameHandler()
 {
 	system("CLS");
-	fstream file;
-	String endGameDesc;
-	int length = 0;
 
-	file.open("EndGameText.txt", ios::in);
-	if (file.is_open()) {
+	String endDesc = "You reach the mausoleum, and you read the plaque...\nIn loving memory of [playername]. May they rest well in their eternal slumber\n\n";
 
-		char singleCharacter;
+	endDesc.Replace("[playername]", name);
 
-		while (true) {
-			file.get(singleCharacter) >> noskipws;
-			if (singleCharacter == '#') {
-				break;
-			}
-			else {
-				length++;
-			}
-		}
-		
-		endGameDesc = new char[length + 1];
-
-		file.seekg(0);
-
-		int i = 0;
-
-		while (i < length) {
-			file.get(singleCharacter) >> noskipws;
-			endGameDesc[i] = singleCharacter;
-			i++;
-		}
-
-	}
-
-	file.close(); //close file !!!
-
-	if (endGameDesc[length] != '\0') { //Check for null terminator, adds if it doesnt exist
-		endGameDesc[length] = '\0';
-	}
-	
-	endGameDesc.Replace("[playername]", name);
-
-	cout << endGameDesc.GetData();
+	cout << endDesc.GetData();
 	cout << "Are you ready to go?\n\n";
 
 	command.Input();
@@ -461,6 +424,7 @@ void GameController::EndGameHandler()
 	if (command.Find("yes") != -1) {
 		cout << "\nYou pass peacefully, Game Over...\n\n";
 		system("pause");
+		return;
 	}
 	else if (command.Find("no") != -1) {
 		cout << "You may continue to explore, but this is your final resting place\n";
@@ -491,10 +455,10 @@ void GameController::LoadCombat()
 {
 	cout << "You approach the two goblins and start a fight!!" << endl;
 
-	bool winState = false;
+	bool wonFight = false;
 
 	//Game Loop
-	while (winState == false) {
+	while (true) {
 		if (playerTurn) {
 
 			if (health > 0) {
@@ -513,17 +477,17 @@ void GameController::LoadCombat()
 				EnemyActionSelector();
 			}
 			else if (eHealth <= 0) {
-				winState = true;
+				wonFight = true;
 				break;
 			}
 		}
 	}
-	if (!winState) {
+	if (wonFight == true) {
 		cout << "You defeat the goblins and can now collect the flower!\n";
-		canPickup[FAERIE_KEY_ID] = true;
-		LoadRoom(2,0,false);
+		canPickup[FAERIE_KEY_ID-1] = true;
+		RunGame(1, 0, false);
 	}
-	else if (winState) {
+	else if (wonFight == false) {
 		cout << "You Died\n";
 		system("pause");
 	}
@@ -542,18 +506,18 @@ void GameController::PlayerActionSelector()
 	cout << "||Health: " << health << "||\t" << "||Enemy Health: " << eHealth << "\nEnemy is readying attack!\n";
 	command.Input();
 
-	if (commandIndex = command.Find("cast") == 0 && command.len() > 4) {
+	if (commandIndex = command.Find("cast") == 0 && command.len() > 5) {
 
 		system("CLS");
-		String temp = new char[command.len() - 4];
+		char* temp = new char[command.len() - 4 + 1];
 		int j = 0;
 
-		for (int i = 4; i < command.len(); ++i) {
+		for (int i = 5; i < command.len(); ++i) {
 			temp[j] = command[i];
 			++j;
 		}
-		if (temp[command.len() - 4] != '\0') {
-			temp[command.len() - 4] = '\0';
+		if (temp[command.len() - 5] != '\0') {
+			temp[command.len() - 5] = '\0';
 		}
 		command = temp;
 		bool hasSpell = FindSpell(command);
@@ -568,7 +532,7 @@ void GameController::PlayerActionSelector()
 
 			switch (tempID) {
 			case 2:
-				dmg = rand() & spellbook[2].GetMaxDmg() + spellbook[2].GetMinDmg();
+				dmg = rand() & spellbook[2].GetMaxDmg() + 2;
 				cout << "You deal " << dmg << " damage";
 
 				eHealth -= dmg;
@@ -576,7 +540,7 @@ void GameController::PlayerActionSelector()
 				break;
 
 			case 3:
-				dmg = rand() & spellbook[3].GetMaxDmg() + spellbook[3].GetMinDmg();
+				dmg = rand() & spellbook[3].GetMaxDmg() + 1;
 				cout << "You deal " << dmg << " damage";
 
 				eHealth -= dmg;
@@ -584,7 +548,7 @@ void GameController::PlayerActionSelector()
 				break;
 
 			case 6:
-				dmg = rand() & spellbook[6].GetMaxDmg() + spellbook[6].GetMinDmg();
+				dmg = rand() & spellbook[6].GetMaxDmg() + 1;
 				cout << "You deal " << dmg << " damage";
 
 				eHealth -= dmg;
@@ -593,7 +557,7 @@ void GameController::PlayerActionSelector()
 
 			case 8:
 				
-				dmg = rand() & spellbook[8].GetMaxDmg() + spellbook[8].GetMinDmg();
+				dmg = rand() & spellbook[8].GetMaxDmg() + 1;
 				cout << "You deal " << dmg << " damage";
 
 				eHealth -= dmg;
@@ -908,9 +872,9 @@ void GameController::AddToInventory(Object& toAdd)
 				cout << "You cannot carry any more of that item!" << endl;
 				return;
 			}
-			else {
-				cout << "You cannot pick that up" << endl;
-			}
+		}
+		else {
+			cout << "You cannot pick that up" << endl;
 		}
 	}
 	else {
